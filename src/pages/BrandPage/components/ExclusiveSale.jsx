@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { useProducts } from "../../../hooks/queries/products";
 import LoadingSpinner from "../../../components/LoadingSpinner";
-function Clearance() {
+function ExclusiveSale() {
   const [products, setProducts] = useState([]);
   const scrollContainerRef = useRef(null);
   const { data: response, isLoading, error } = useProducts();
@@ -48,13 +48,13 @@ function Clearance() {
   };
 
   return (
-    <div className="clearance-container" data-aos="fade-up">
-      <div className="clearance-header">
-        <div className="clearance-content">
-          <h2 className="clearance-content_h2">
-            Clearance <span className="clearance-content_span">sale</span>
+    <div className="exclusive-sale-container" data-aos="fade-up">
+      <div className="exclusive-sale-header">
+        <div className="exclusive-sale-content">
+          <h2 className="exclusive-sale-content_h2">
+            Exclusive <span className="exclusive-sale-content_span">sale</span>
           </h2>
-          {/* <p className="clearance-content_p">
+          {/* <p className="exclusive-sale-content_p">
             Get amazing deals on our top-rated products
           </p> */}
         </div>
@@ -62,14 +62,14 @@ function Clearance() {
           View All <ViewAllIcon />
         </Link>
       </div>
-      <div className="clearance-products-wrapper">
+      <div className="exclusive-sale-products-wrapper">
         <button
           className="scroll-button scroll-left"
           onClick={() => scroll("left")}
         >
           <FiArrowLeft />
         </button>
-        <div className="clearance-products" ref={scrollContainerRef}>
+        <div className="exclusive-sale-products" ref={scrollContainerRef}>
           {products?.map((product, index) => (
             <ProductCard key={index} product={product} />
           ))}
@@ -88,4 +88,4 @@ function Clearance() {
   );
 }
 
-export default Clearance;
+export default ExclusiveSale;

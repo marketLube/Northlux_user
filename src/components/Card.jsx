@@ -24,12 +24,16 @@ function Card({ product }) {
       <div className="product-card_image">
         {discount && <span className="discount-tag">{discount}</span>}
         <img src={mainImage} alt={name} />
-        {/* <button className="wishlist-btn">
-          <FiHeart />
-        </button> */}
+        <div className="wishlist-btn-wrapper">
+          <button className="wishlist-btn">
+            <FiHeart />
+          </button>
+          {/* <button className="wishlist-btn">qqqqq</button> */}
+        </div>
       </div>
+
       <div className="product-card_content">
-        <span className="category">{category.name}</span>
+        {/* <span className="category">{category.name}</span> */}
         <h3 className="title">{name}</h3>
         <div className="price">
           <span className="current-price">₹{offerPrice}</span>
@@ -39,6 +43,15 @@ function Card({ product }) {
           {"★".repeat(Math.floor(averageRating))}
           {"☆".repeat(5 - Math.floor(averageRating))}
           <span className="rating-number">{averageRating}</span>
+        </div>
+        <div className="add-to-cart-wrapper">
+          <button
+            // onClick={() => handleAddToCart("buy")}
+            className="add-to-cart"
+            // disabled={loadingAction !== null}
+          >
+            Add To Cart
+          </button>
         </div>
       </div>
     </div>

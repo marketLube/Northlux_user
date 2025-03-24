@@ -20,21 +20,21 @@ import { useLocation } from "react-router-dom";
 
 const data = [
   {
-    image: "/images/carousel/carousel-1.jpg",
+    image: "/images/carousel/carousel-1.png",
     alt: "carousel-1",
-    heading: `Strength in Every Tool. 
+    heading: `Strength in Every Tool.
        in Every Task.`,
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
   {
-    image: "/images/carousel/carousel-1.jpg",
+    image: "/images/carousel/carousel-1.png",
     alt: "carousel-2",
     heading: "The Best Tools for the Job",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
   {
-    image: "/images/carousel/carousel-1.jpg",
+    image: "/images/carousel/carousel-1.png",
     alt: "carousel-3",
     heading: "The Best Tools for the Job",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -371,10 +371,10 @@ function AllProductsContent() {
         : (Math.min(priceRange.max, sliderMax) / sliderMax) * 100;
 
     return {
-      background: `linear-gradient(to right, 
-        #eee ${percent1}%, 
-        #FF5C00 ${percent1}%, 
-        #FF5C00 ${percent2}%, 
+      background: `linear-gradient(to right,
+        #eee ${percent1}%,
+        #FF5C00 ${percent1}%,
+        #FF5C00 ${percent2}%,
         #eee ${percent2}%)`,
     };
   };

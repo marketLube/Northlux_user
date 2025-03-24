@@ -1,13 +1,18 @@
-.shop-by {
+.shop-by-category {
   max-width: 1402px;
   margin: 0 auto;
   padding: 40px 20px;
   text-align: center;
+  margin-bottom: 4rem;
 
   h2 {
     font-size: 28px;
     margin-bottom: 24px;
     color: #000;
+
+    .shop-by-category-span {
+      color: #40bfb4;
+    }
   }
 
   .tabs {
@@ -84,7 +89,7 @@
           rgba(0, 0, 0, 0.5)
         );
         display: flex;
-        align-items: center;
+        align-items: start;
         justify-content: center;
 
         .content-logo {
@@ -115,7 +120,7 @@
     }
   }
 
-  .browse-all {
+  .shop-all {
     display: flex;
     flex-direction: column;
     justify-content: center;

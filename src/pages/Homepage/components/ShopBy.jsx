@@ -13,7 +13,16 @@ const ShopBy = () => {
     { name: "ZARA", image: "/images/brands/prada.png" },
     { name: "CHANEL", image: "/images/brands/prada.png" },
   ];
-  const categories = ["Clothing", "Accessories", "Footwear", "Bags"];
+  const categories = [
+    { name: "jeans", image: "/images/categories/jeans.png" },
+    { name: "t-shirts", image: "/images/categories/t-shirt.png" },
+    { name: "shoes", image: "/images/categories/active-wear.png" },
+    { name: "bags", image: "/images/categories/jeans.png" },
+    { name: "activewear", image: "/images/categories/active-wear.png" },
+    { name: "shoes", image: "/images/categories/active-wear.png" },
+    { name: "bags", image: "/images/categories/jeans.png" },
+    { name: "activewear", image: "/images/categories/active-wear.png" },
+  ];
 
   return (
     <section className="shop-by">
@@ -32,27 +41,29 @@ const ShopBy = () => {
           Categories
         </button>
       </div>
-      <div className="content">
+      {/* <div className="content"> */}
         {activeTab === "brands" ? (
-          <div className="brands">
+          <div className="content">
             {brands.map((brand, index) => (
-              <div key={index} className="brand-item">
-                <img src={brand.image} alt={brand.name} />
-                <div className="brand-overlay"></div>
-                <h3 className="brand-name">{brand.name}</h3>
+              <div key={index} className="content-item">
+                <img src={brand.image} alt={brand.name} className="content-image" />
+                <div className="content-overlay"></div>
+                <h3 className="content-name">{brand.name}</h3>
               </div>
             ))}
           </div>
         ) : (
-          <div className="categories">
+          <div className="content">
             {categories.map((category, index) => (
-              <div key={index} className="category-item">
-                {category}
+              <div key={index} className="content-item">
+                <img src={category.image} alt={category.name} className="content-image" />
+                <div className="content-overlay"></div>
+                <h3 className="content-name">{category.name}</h3>
               </div>
             ))}
           </div>
         )}
-      </div>
+      {/* </div> */}
       <div className="browse-all">
         <p>Shop Smart – All Brands & Wears, One Click!</p>
         <a href="#">Browse all →</a>

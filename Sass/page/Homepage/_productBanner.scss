@@ -1,0 +1,19 @@
+.product-banner {
+  max-width: 1402px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap: 32px;
+  align-self: stretch;
+
+
+  .product-banner-arrow-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+}

@@ -9,6 +9,10 @@
 @use "page/Homepage/Bestseller";
 @use "page/Homepage/Offer";
 @use "page/Homepage/Trending";
+@use "page/Homepage/ProductBanner";
+
+@use "page/BrandPage/ExlusiveSale";
+@use "page/BrandPage/ShopByCategory";
 @use "components/card";
 @use "components/Footer";
 @use "page/Productpage/Allproducts";

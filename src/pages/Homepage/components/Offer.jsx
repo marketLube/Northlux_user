@@ -20,6 +20,12 @@ function Offer() {
           <Link to="/product" className="explore-btn">
             Explore
           </Link>
+          <div className="offer-btn">
+            <button className="add-to-cart">Add to Cart</button>
+            <Link to="/product" className="explore-btn">
+              Explore
+            </Link>
+          </div>
         </div>
         <div className="offer-image">
           <img src="/images/offer/offer.png" alt="Kitchen Cookware Set" />

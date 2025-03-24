@@ -34,6 +34,8 @@ function Homepage() {
       <Carousel data={data} />
       <ShopBy />
       {/* <ProductBanner /> */}
+      <ShopBy />
+      <ProductBanner />
       <Clearance />
       <Bestseller />
       <Offer />

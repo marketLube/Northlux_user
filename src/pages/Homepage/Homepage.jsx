@@ -33,7 +33,7 @@ function Homepage() {
   return (
     <div>
       <Carousel data={data} />
-      <ShopBy />
+      {/* <ShopBy /> */}
       <Clearance />
       <Bestseller />
       <Offer />

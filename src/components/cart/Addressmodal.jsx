@@ -76,23 +76,20 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     onClose();
   };
 
-  const handlePlaceOrder = () => {
-    const { fullName, building, street, city, state, pincode } = formData;
+  const handleWhatsAppRedirect = () => {
+    const deliveryAddress = selectedAddress
+      ? savedAddresses.find((addr) => addr.id === selectedAddress)?.address
+      : `${formData.building}, ${formData.street}, ${formData.landmark}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
 
-    if (
-      selectedAddress ||
-      (fullName && building && street && city && state && pincode)
-    ) {
-      const address = selectedAddress ? selectedAddress : formData;
-      placeOrder(address);
-    } else {
-      toast.warning(
-        "Please select an address or fill in all required fields.",
-        {
-          position: "top-right",
-        }
-      );
-    }
+    const message = `
+    *New Order*
+    ------------------
+    *Delivery Address:*
+    ${deliveryAddress}`;
+    const encodedMessage = encodeURIComponent(message);
+    const phoneNumber = "918714441727";
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappURL, "_blank");
   };
 
   return (
@@ -217,9 +214,18 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
             <button
               className="proceed-btn"
               disabled={isOrderPending}
-              onClick={handlePlaceOrder}
+              onClick={handleWhatsAppRedirect}
             >
-              {isOrderPending ? <ButtonLoading /> : <span>Place Order</span>}
+              {isOrderPending ? (
+                <ButtonLoading />
+              ) : (
+                <>
+                  <span>
+                    <FaWhatsapp size={15} />
+                  </span>
+                  <span>Place Order</span>
+                </>
+              )}
             </button>
           </div>
         ) : (

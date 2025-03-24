@@ -1008,7 +1008,7 @@ ul {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  background: linear-gradient(135deg, #ffb347 0%, #ffaa33 100%);
+  background: linear-gradient(135deg, #2eb5af 0%, #2eb5af 100%);
   overflow: hidden;
 }
 .offer-container .offer-content .offer-text {
@@ -4456,7 +4456,7 @@ input[required]::placeholder::after {
   position: absolute;
   width: 30%;
   height: 30%;
-  background: #ffd700;
+  background: #2eb5af;
   border-radius: 50%;
   top: 35%;
   left: 35%;

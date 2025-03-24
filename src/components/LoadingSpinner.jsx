@@ -8,7 +8,7 @@ function LoadingSpinner({ height }) {
     >
       <div className="saw-spinner">
         <div className="saw-blade"></div>
-        <div className="saw-text">MILL STORE</div>
+        <div className="saw-text">Northlux</div>
       </div>
     </div>
   );

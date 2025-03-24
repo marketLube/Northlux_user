@@ -24,7 +24,7 @@ function Homepage() {
     <div>
       <Carousel data={data} />
       <ShopBy/>
-      {/* <ProductBanner /> */}
+      <ProductBanner />
       <Clearance />
       <Bestseller />
       <Offer />

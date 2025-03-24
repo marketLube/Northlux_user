@@ -144,6 +144,9 @@
       padding: 0.5rem 1rem;
       color: #2EB5AF;
       font-weight: 600;
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
     }
   }
 }

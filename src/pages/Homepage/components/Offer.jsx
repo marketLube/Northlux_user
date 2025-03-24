@@ -15,9 +15,12 @@ function Offer() {
             <span className="discount">Flat 25% Off</span>
             <span className="limited">Limited Time Offer</span>
           </div>
-          <Link to="/product" className="explore-btn">
-            Explore
-          </Link>
+          <div className="offer-btn">
+            <button className="add-to-cart">Add to Cart</button>
+            <Link to="/product" className="explore-btn">
+              Explore
+            </Link>
+          </div>
         </div>
         <div className="offer-image">
           <img src="/images/offer/offer.png" alt="Kitchen Cookware Set" />

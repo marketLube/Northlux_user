@@ -3,12 +3,13 @@
 
 .offer-container {
   margin: 2rem 0;
+  margin-bottom: 5rem;
 
   .offer-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    background: linear-gradient(135deg, #ffb347 0%, #ffaa33 100%);
+    background: var.$color-primary;
     overflow: hidden;
 
     .offer-text {
@@ -25,8 +26,9 @@
       }
 
       h3 {
-        font-size: 1.5rem;
-        font-weight: 500;
+        font-size: 2.5rem;
+        font-weight: 600;
+        opacity: 0.8;
         color: white;
         margin-bottom: 1.5rem;
         position: relative;
@@ -72,6 +74,11 @@
         }
       }
 
+      .offer-btn {
+        display: flex;
+        gap: 1rem;
+      }
+
       .explore-btn {
         align-self: flex-start;
         padding: 0.75rem 2rem;
@@ -87,6 +94,16 @@
           background-color: white;
           transform: translateY(-2px);
         }
+      }
+
+      .add-to-cart {
+        // background-color: white;
+        background: transparent;
+        color: white;
+        border: 1px solid white;
+        border-radius: 4px;
+        font-weight: 500;
+        padding: 0.75rem 2rem;
       }
     }
 
@@ -129,8 +146,15 @@
             text-align: lef;
           }
         }
+        .offer-btn {
+          flex-direction: column;
+        }
 
         .explore-btn {
+          width: 100%;
+          text-align: center;
+        }
+        .add-to-cart {
           width: 100%;
         }
       }

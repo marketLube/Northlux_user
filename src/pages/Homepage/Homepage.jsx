@@ -15,6 +15,18 @@ const data = [
     heading: "The Best Tools for the Job",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
+  {
+    image: "/images/carousel/carousel-1.png",
+    alt: "carousel-2",
+    heading: "The Best Tools for the Job",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    image: "/images/carousel/carousel-1.png",
+    alt: "carousel-2",
+    heading: "The Best Tools for the Job",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
 ];
 function Homepage() {
   return (

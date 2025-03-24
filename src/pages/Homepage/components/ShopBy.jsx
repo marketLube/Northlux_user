@@ -1,28 +1,35 @@
 import React, { useState } from "react";
-
+import { useBrands } from "../../../hooks/queries/brands";
+import LoadingSpinner from "../../../components/LoadingSpinner";
+import { useCategories } from "../../../hooks/queries/categories";
+import { Link, useNavigate } from "react-router-dom";
 const ShopBy = () => {
   const [activeTab, setActiveTab] = useState("brands");
+  const navigate = useNavigate();
+  const {
+    data: brandsData,
+    isLoading: brandsLoading,
+    isError: brandsError,
+  } = useBrands();
+  const {
+    data: categoriesData,
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+  } = useCategories();
 
-  const brands = [
-    { name: "PRADA", image: "/images/brands/prada.png" },
-    { name: "RAY-BAN", image: "/images/brands/rayban.png" },
-    { name: "BALENCIAGA", image: "/images/brands/prada.png" },
-    { name: "SUPREME", image: "/images/brands/rayban.png" },
-    { name: "CARTIER", image: "/images/brands/prada.png" },
-    { name: "HERMES", image: "/images/brands/prada.png" },
-    { name: "ZARA", image: "/images/brands/prada.png" },
-    { name: "CHANEL", image: "/images/brands/prada.png" },
-  ];
-  const categories = [
-    { name: "jeans", image: "/images/categories/jeans.png" },
-    { name: "t-shirts", image: "/images/categories/t-shirt.png" },
-    { name: "shoes", image: "/images/categories/active-wear.png" },
-    { name: "bags", image: "/images/categories/jeans.png" },
-    { name: "activewear", image: "/images/categories/active-wear.png" },
-    { name: "shoes", image: "/images/categories/active-wear.png" },
-    { name: "bags", image: "/images/categories/jeans.png" },
-    { name: "activewear", image: "/images/categories/active-wear.png" },
-  ];
+  const brands = brandsData?.data.brands;
+  const categories = categoriesData?.envelop?.data;
+
+  const handleCategoryClick = (category) => {
+    navigate("/products", {
+      state: {
+        selectedCategory: {
+          id: category._id,
+          name: category.name,
+        },
+      },
+    });
+  };
 
   return (
     <section className="shop-by">
@@ -42,31 +49,47 @@ const ShopBy = () => {
         </button>
       </div>
       {/* <div className="content"> */}
-        {activeTab === "brands" ? (
+      {activeTab === "brands" ? (
+        brandsLoading ? (
+          <LoadingSpinner />
+        ) : (
           <div className="content">
-            {brands.map((brand, index) => (
+            {brands?.map((brand, index) => (
               <div key={index} className="content-item">
-                <img src={brand.image} alt={brand.name} className="content-image" />
+                <img
+                  src={brand.image}
+                  alt={brand.name}
+                  className="content-image"
+                />
                 <div className="content-overlay"></div>
                 <h3 className="content-name">{brand.name}</h3>
               </div>
             ))}
           </div>
-        ) : (
-          <div className="content">
-            {categories.map((category, index) => (
-              <div key={index} className="content-item">
-                <img src={category.image} alt={category.name} className="content-image" />
-                <div className="content-overlay"></div>
-                <h3 className="content-name">{category.name}</h3>
-              </div>
-            ))}
-          </div>
-        )}
+        )
+      ) : (
+        <div className="content">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="content-item"
+              onClick={() => handleCategoryClick(category)}
+            >
+              <img
+                src={category.image}
+                alt={category.name}
+                className="content-image"
+              />
+              <div className="content-overlay"></div>
+              <h3 className="content-name">{category.name}</h3>
+            </div>
+          ))}
+        </div>
+      )}
       {/* </div> */}
       <div className="browse-all">
         <p>Shop Smart – All Brands & Wears, One Click!</p>
-        <a href="#">Browse all →</a>
+        <Link to="/products">Browse all →</Link>
       </div>
     </section>
   );

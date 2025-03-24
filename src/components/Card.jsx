@@ -44,7 +44,7 @@ function Card({ product }) {
           {"☆".repeat(5 - Math.floor(averageRating))}
           <span className="rating-number">{averageRating}</span>
         </div>
-        <div className="add-to-cart-wrapper">
+        {/* <div className="add-to-cart-wrapper">
           <button
             // onClick={() => handleAddToCart("buy")}
             className="add-to-cart"
@@ -52,7 +52,7 @@ function Card({ product }) {
           >
             Add To Cart
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

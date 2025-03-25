@@ -8,7 +8,8 @@ import Trending from "./components/Trending";
 import Footer from "../../components/Footer";
 import ShopBy from "./components/ShopBy";
 import ProductBanner from "./components/ProductBanner";
-const data = [
+import { useBanners } from "../../hooks/queries/banner";
+const datas = [
   {
     image: "/images/carousel/carousel-1.png",
     alt: "carousel-2",
@@ -28,12 +29,14 @@ const data = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
 ];
+
 function Homepage() {
+  const { allBanners, isLoading, error } = useBanners();
   return (
     <div>
-      <Carousel data={data} />
+      <Carousel data={allBanners?.filter((banner) => banner?.bannerFor === "hero")} />
       <ShopBy />
-      {/* <ProductBanner /> */}
+      <ProductBanner banners={allBanners} />
       <Clearance />
       <Bestseller />
       <Offer />

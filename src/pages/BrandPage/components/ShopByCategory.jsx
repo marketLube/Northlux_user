@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import { useProducts } from "../../../hooks/queries/products";
 import Card from "../../../components/Card";
+import Pagination from "../../../components/Pagination";
 
-const ShopByCategory = () => {
+const ShopByCategory = ({id}) => {
   const [activeTab, setActiveTab] = useState("sholder bags");
 
-  const { data, isLoading, error } = useProducts();
+  const { data, isLoading, error } = useProducts({brandId:id});
 
-  console.log(data?.data?.products);
-
-  const brands = [
-    { name: "PRADA", image: "/images/brands/prada.png" },
-    { name: "RAY-BAN", image: "/images/brands/rayban.png" },
-    { name: "BALENCIAGA", image: "/images/brands/prada.png" },
-    { name: "SUPREME", image: "/images/brands/rayban.png" },
-    { name: "CARTIER", image: "/images/brands/prada.png" },
-    { name: "HERMES", image: "/images/brands/prada.png" },
-    { name: "ZARA", image: "/images/brands/prada.png" },
-    { name: "CHANEL", image: "/images/brands/prada.png" },
-  ];
 
   const categories = ["sholder bags", "t-shirts", "shoes", "bags", "sneakers"];
 
@@ -38,11 +27,15 @@ const ShopByCategory = () => {
           </button>
         ))}
       </div>
-      <div className="content">
+      {data?.data?.products?.length > 0 ? <div className="content">
         {data?.data?.products?.map((product, index) => (
-          <Card product={product} />
+          <Card product={product} key={index} />
         ))}
-      </div>
+      </div> : <div>No products found</div>}
+
+      {data?.data?.products?.length > 0 && <div className="pagination">
+        <Pagination />
+      </div>}
 
       {/* </div> */}
       <div className="shop-all">

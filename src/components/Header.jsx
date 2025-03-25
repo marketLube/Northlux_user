@@ -13,12 +13,13 @@ import { logout } from "../redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useCategories } from "../hooks/queries/categories";
 import { useProducts } from "../hooks/queries/products";
+import BrandsList from './BrandsList/BrandsList';
 
 export default function Header() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
@@ -26,6 +27,8 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const searchRef = useRef(null);
+  const [isBrandsListOpen, setIsBrandsListOpen] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
 
   const {
     data,
@@ -86,6 +89,12 @@ export default function Header() {
   const categories = data?.envelop?.data || [];
 
   const handleCategoryClick = (category) => {
+    if (selectedCategory?._id === category._id) {
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(category);
+    }
+
     navigate("/products", {
       state: {
         selectedCategory: {
@@ -105,6 +114,10 @@ export default function Header() {
 
   const handleMobileSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const toggleBrandsList = () => {
+    setIsBrandsListOpen(!isBrandsListOpen);
   };
 
   return (
@@ -281,6 +294,16 @@ export default function Header() {
             </div>
           )}
         </div>
+
+        <div className="header-item" onClick={toggleBrandsList}>
+          Brands
+        </div>
+
+        {/* <BrandsList
+          isOpen={isBrandsListOpen || selectedCategory !== null}
+          category={selectedCategory}
+        /> */}
+
       </header>
       {categories && (
         <ul className="header-cat">

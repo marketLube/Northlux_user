@@ -55,7 +55,7 @@ const ShopBy = () => {
         ) : (
           <div className="content">
             {brands?.map((brand, index) => (
-              <div key={index} className="content-item">
+              <div onClick={() => navigate(`/brands/${brand._id}`)} key={index} className="content-item">
                 <img
                   src={brand.image}
                   alt={brand.name}

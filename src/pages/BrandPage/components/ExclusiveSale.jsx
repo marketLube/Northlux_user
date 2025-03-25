@@ -8,13 +8,14 @@ import {
 import { Link } from "react-router-dom";
 import { useProducts } from "../../../hooks/queries/products";
 import LoadingSpinner from "../../../components/LoadingSpinner";
-function ExclusiveSale() {
+function ExclusiveSale({ id }) {
   const [products, setProducts] = useState([]);
   const scrollContainerRef = useRef(null);
-  const { data: response, isLoading, error } = useProducts();
+  const { data: response, isLoading, error } = useProducts({ brandId: id });
   const productslists = response?.data?.products
     ? response?.data?.products
     : [];
+
 
   useEffect(() => {
     setProducts(productslists);
@@ -62,25 +63,31 @@ function ExclusiveSale() {
           View All <ViewAllIcon />
         </Link>
       </div>
-      <div className="exclusive-sale-products-wrapper">
-        <button
-          className="scroll-button scroll-left"
-          onClick={() => scroll("left")}
-        >
-          <FiArrowLeft />
-        </button>
-        <div className="exclusive-sale-products" ref={scrollContainerRef}>
-          {products?.map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
+      {products.length > 0 ? (
+        <div className="exclusive-sale-products-wrapper">
+          <button
+            className="scroll-button scroll-left"
+            onClick={() => scroll("left")}
+          >
+            <FiArrowLeft />
+          </button>
+          <div className="exclusive-sale-products" ref={scrollContainerRef}>
+            {products?.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
+          </div>
+          <button
+            className="scroll-button scroll-right"
+            onClick={() => scroll("right")}
+          >
+            <FiArrowRight />
+          </button>
         </div>
-        <button
-          className="scroll-button scroll-right"
-          onClick={() => scroll("right")}
-        >
-          <FiArrowRight />
-        </button>
-      </div>
+      ) : (
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          No products found
+        </div>
+      )}
       <Link to="/products" className="view-all mobile-view-all">
         View All <ViewAllIcon />
       </Link>

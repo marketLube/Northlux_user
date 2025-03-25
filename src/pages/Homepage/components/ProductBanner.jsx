@@ -8,32 +8,32 @@ import { FreeMode, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import React from "react";
 
-const data = [
-  {
-    id: 1,
-    title: "Product 1",      image: "/images/banner/Banner1.png",
+// const data = [
+//   {
+//     id: 1,
+//     title: "Product 1",      image: "/images/banner/Banner1.png",
 
-    categories: ["Category 1"],
-    name: "product-1",
-  },
-  {
-    id: 2,
-    title: "Product 2",      image: "/images/banner/Banner2.png",
+//     categories: ["Category 1"],
+//     name: "product-1",
+//   },
+//   {
+//     id: 2,
+//     title: "Product 2",      image: "/images/banner/Banner2.png",
 
-    categories: ["Category 1"],
-    name: "product-1",
-  },
-  {
-    id: 3,
-    title: "Product 3",      image: "/images/banner/Banner3.png",
+//     categories: ["Category 1"],
+//     name: "product-1",
+//   },
+//   {
+//     id: 3,
+//     title: "Product 3",      image: "/images/banner/Banner3.png",
 
-    categories: ["Category 1"],
-    name: "product-1",
-  },
+//     categories: ["Category 1"],
+//     name: "product-1",
+//   },
 
-];
+// ];
 
-function ProductBanner() {
+function ProductBanner({banners}) {
   const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -62,25 +62,34 @@ function ProductBanner() {
   // Create duplicated posts if there are fewer than 4
   // This ensures smooth looping with small datasets
   const getSlidesData = () => {
-    if (data.length >= 4) return data;
+    // Add safety check for banners
+    if (!banners || !Array.isArray(banners) || banners.length === 0) {
+      return [];
+    }
+
+    if (banners.length >= 4) return banners;
 
     // Create duplicates with unique keys for React
-    const duplicatedPosts = [...data];
-    const neededCopies = Math.ceil(4 / data.length) - 1;
+    const duplicatedPosts = [...banners];
+    const neededCopies = Math.ceil(4 / banners.length) - 1;
 
     for (let i = 0; i < neededCopies; i++) {
-      data.forEach((post, index) => {
+      banners.forEach((post, index) => {
         duplicatedPosts.push({
           ...post,
           id: `${post.id}-copy-${i}-${index}`, // Ensure unique key
         });
       });
     }
-
     return duplicatedPosts;
   };
 
   const slidesData = getSlidesData();
+
+  // Add safety check before rendering
+  if (!slidesData.length) {
+    return null; // or return a loading state/placeholder
+  }
 
   return (
     <div className="product-banner" id="blogs">
@@ -91,7 +100,7 @@ function ProductBanner() {
           centeredSlides={true}
           spaceBetween={0}
           loop={true}
-          loopedSlides={slidesData.length > 3 ? 3 : slidesData.length} // Adjust looped slides
+          loopedSlides={true} // Adjust looped slides
           initialSlide={0}
           pagination={{
             clickable: true,
@@ -109,7 +118,7 @@ function ProductBanner() {
           wrapperClass="swiper-wrapper"
           cssMode={false}
           loopFillGroupWithBlank={true}
-          loopAdditionalSlides={slidesData.length > 3 ? 2 : slidesData.length}
+          loopAdditionalSlides={slidesData?.length > 3 ? 3 : slidesData?.length}
           centeredSlidesBounds={false}
           // grabCursor={true}
           watchSlidesProgress={true}

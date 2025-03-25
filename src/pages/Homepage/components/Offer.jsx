@@ -17,7 +17,7 @@ function Offer() {
             <span className="limited">Limited Time Offer</span>
           </div>
 
-          <Link to="/product" className="explore-btn">
+          <Link to="/products" className="explore-btn">
             Explore
           </Link>
         </div>

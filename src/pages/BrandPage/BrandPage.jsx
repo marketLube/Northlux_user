@@ -3,22 +3,35 @@ import Carousel from "../../components/Carousel";
 import ExclusiveSale from "./components/ExclusiveSale";
 import ProductBanner from "../Homepage/components/ProductBanner";
 import ShopByCategory from "./components/ShopByCategory";
+import { useBanners } from "../../hooks/queries/banner";
+import { useParams } from "react-router-dom";
+import { useBrand, useBrands } from "../../hooks/queries/brands";
 
 export default function BrandPage() {
-  const data = [
-    {
-      image: "/images/carousel/carousel-1.png",
-      alt: "carousel-2",
-      heading: "The Best Tools for the Job",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-  ];
+  const { allBanners, isLoading, error } = useBanners();
+  const { id } = useParams();
+  const { brand, isLoading: brandLoading, error: brandError } = useBrand(id);
+
+  // Handle loading states
+  if (isLoading || brandLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Handle error states
+  if (error || brandError) {
+    return <div>Error loading content</div>;
+  }
+
   return (
-    <div >
-      <Carousel data={data} maxHeight="500px" />
-      <ExclusiveSale />
-      {/* <ProductBanner /> */}
-      <ShopByCategory/>
+    <div>
+      <Carousel data={[brand]} maxHeight="500px" isBrand={true} />
+      <ExclusiveSale id={id} />
+      <ProductBanner
+        banners={allBanners?.filter(
+          (banner) => banner?.bannerFor === "product"
+        )}key={brand?.id}
+      />
+      <ShopByCategory id={id} />
     </div>
   );
 }

@@ -17,6 +17,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../../components/error/ErrorFallback";
 import { useLabels } from "../../hooks/queries/labels";
 import { useLocation } from "react-router-dom";
+import Pagination from "../../components/Pagination";
 
 const data = [
   {
@@ -704,6 +705,9 @@ function AllProductsContent() {
             ))}
           </div>
         </div>
+          <div className="pagination">
+            <Pagination />
+          </div>
       </div>
     </div>
   );

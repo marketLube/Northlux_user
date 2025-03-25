@@ -20,6 +20,7 @@ async function getProducts(filters) {
   if (filters.minPrice) params.append("minPrice", filters.minPrice);
   if (filters.maxPrice) params.append("maxPrice", filters.maxPrice);
   if (filters.labelId) params.append("labelId", filters.labelId);
+  if (filters.brandId) params.append("brandId", filters.brandId);
 
   if (filters.sort) {
     switch (filters.sort) {

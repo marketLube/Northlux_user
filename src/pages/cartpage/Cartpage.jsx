@@ -22,8 +22,13 @@ import {
   useRemoveCoupon,
 } from "../../hooks/queries/coupon";
 import axios from "axios";
+import apiClient from "../../api/client";
+import RenderRazorpay from "../../components/Razorpay/RenderRazorpay";
 
 // Add this array of coupons
+
+const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID;
+const keySecret = import.meta.env.VITE_RAZORPAY_KEY_SECRET;
 
 function Cartpage() {
   const [couponCode, setCouponCode] = useState("");
@@ -33,14 +38,21 @@ function Cartpage() {
   const [itemToRemove, setItemToRemove] = useState(null);
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+ const[address,setAddress] = useState(null);
+//razorpay
+  const [displayRazorpay, setDisplayRazorpay] = useState(false);
+  const [orderDetails, setOrderDetails] = useState({
+    orderId: null,
+    currency: null,
+    amount: null,
+   });
   const navigate = useNavigate();
   const { data: cartData, isLoading, error } = useCart();
   const { mutate: updateQuantity, isLoading: isUpdating } =
     useUpdateCartQuantity();
   const { mutate: removeFromCart, isLoading: isRemoving } = useRemoveFromCart();
   const { mutate: applyCoupon, isLoading: isApplyingCoupon } = useApplyCoupon();
-  const { mutate: removeCoupon, isLoading: isRemovingCoupon } =
-    useRemoveCoupon();
+  const { mutate: removeCoupon, isLoading: isRemovingCoupon } = useRemoveCoupon();
 
   const {
     data: couponsData,
@@ -169,7 +181,28 @@ function Cartpage() {
     );
   }
 
+  const handleSubmit = async (selectedAddress , paymentMethod = "razorpay") => {
+    setAddress(selectedAddress);
+    if (paymentMethod === "razorpay") {
+      const response = await apiClient.post(`/order/paymentIntent`);
+      if(response && response.order_id){
+        setOrderDetails({
+          orderId: response.order_id,
+          currency: response.currency,
+          amount: response.amount,
+        });
+        setDisplayRazorpay(true);
+      }
 
+    }else{
+      const response = await apiClient.post(`/order/placeOrder`, {
+        selectedAddress,
+        paymentMethod,
+      });
+      console.log(response);
+    }
+    setIsAddressModalOpen(false);
+  };
 
   return (
     <div className="cart-page">
@@ -446,6 +479,7 @@ function Cartpage() {
       <AddressModal
         isOpen={isAddressModalOpen}
         onClose={() => setIsAddressModalOpen(false)}
+        onSubmit={handleSubmit}
       />
 
       <ConfirmationModal
@@ -458,6 +492,7 @@ function Cartpage() {
         cancelText="Keep"
         type="danger"
       />
+      {displayRazorpay && <RenderRazorpay orderId={orderDetails.orderId} keyId={keyId} keySecret={keySecret} currency={orderDetails.currency} amount={orderDetails.amount} address={address} />}
     </div>
   );
 }

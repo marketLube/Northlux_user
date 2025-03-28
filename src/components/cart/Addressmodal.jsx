@@ -139,37 +139,32 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     const expectedDeliveryDate = new Date(data.expectedDelivery).toLocaleString();
 
     const message = `
-      *New Order Details*
-      ------------------
-      *Order ID:* ${data._id}
-      *Order Date:* ${orderDate}
-      *Expected Delivery:* ${expectedDeliveryDate}
+*Hello! I would like to place a new order*
+------------------
 
-      *Customer Details:*
-      Name: ${data.user.email}
+*My Contact Details:*
+Email: ${data.user.email}
 
-      *Delivery Address:*
-      ${data.deliveryAddress.fullName}
-      ${data.deliveryAddress.street}
-      ${data.deliveryAddress.landmark ? data.deliveryAddress.landmark + '\n' : ''}${data.deliveryAddress.city}
-      ${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
+*Please deliver to:*
+${data.deliveryAddress.fullName}
+${data.deliveryAddress.street}
+${data.deliveryAddress.landmark ? data.deliveryAddress.landmark + '\n' : ''}${data.deliveryAddress.city}
+${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
 
-      *Order Items:*
-      ${data.products.map((item, index) => `
-      ${index + 1}. ${item.name || item.productName}
-        Quantity: ${item.quantity}
-        Price: ₹${item.price}
-      `).join('')}
+*I would like to order:*
+${data.products.map((item, index) => `
+${index + 1}. ${item.name || item.productName}
+   Quantity: ${item.quantity}
+   Price: ₹${item.price}
+`).join('')}
 
-      *Order Summary:*
-      ------------------
-      *Total Amount:* ₹${data.totalAmount}
-      *Payment Method:* ${data.paymentMethod}
-      *Payment Status:* ${data.paymentStatus}
-      *Order Status:* ${data.status}
-      ${data.couponApplied ? `*Coupon Applied:* ${data.couponApplied}` : ''}
+*Order Details:*
+------------------
+Total Amount: ₹${data.totalAmount}
+Payment Method: ${data.paymentMethod}
+${data.couponApplied ? `Coupon Code: ${data.couponApplied}` : ''}
 
-      Thank you for your order! We will process it shortly.`;
+Please confirm my order. Thank you!`;
 
     const encodedMessage = encodeURIComponent(message);
     const phoneNumber = "918714441727";

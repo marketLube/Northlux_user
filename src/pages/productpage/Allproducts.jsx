@@ -18,6 +18,7 @@ import ErrorFallback from "../../components/error/ErrorFallback";
 import { useLabels } from "../../hooks/queries/labels";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import { useBanners } from "../../hooks/queries/banner";
 
 const data = [
   {
@@ -102,6 +103,8 @@ function AllProductsContent() {
     isLoading: labelsLoading,
     error: labelsError,
   } = useLabels();
+
+  const { allBanners, isLoading: bannersLoading, error: bannersError } = useBanners();
 
   const debouncedUpdateFilters = useCallback(
     debounce((newRange) => {
@@ -399,7 +402,7 @@ function AllProductsContent() {
 
   return (
     <div className="product-page">
-      <Carousel data={data} maxHeight="25rem" />
+      <Carousel data={allBanners?.filter((banner) => banner?.bannerFor === "hero")} maxHeight="25rem" />
       <div className="product-section">
         <div className="breadcrumb">
           <span>Home</span> / <span>All Products</span>

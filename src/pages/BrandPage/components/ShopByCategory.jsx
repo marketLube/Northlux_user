@@ -43,11 +43,11 @@ const allCategories = categories?.envelop?.data || [];
         <div>No products found</div>
       )}
 
-      {data?.data?.products?.length > 0 && (
+      {/* {data?.data?.products?.length > 0 && (
         <div className="pagination">
           <Pagination />
         </div>
-      )}
+      )} */}
 
       {/* </div> */}
       <div className="shop-all">

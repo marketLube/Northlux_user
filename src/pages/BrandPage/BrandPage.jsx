@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "../../components/Carousel";
 import ExclusiveSale from "./components/ExclusiveSale";
 import ProductBanner from "../Homepage/components/ProductBanner";
@@ -12,6 +12,10 @@ export default function BrandPage() {
   const { id } = useParams();
   const { brand, isLoading: brandLoading, error: brandError } = useBrand(id);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Handle loading states
   if (isLoading || brandLoading) {
     return <div>Loading...</div>;
@@ -22,15 +26,16 @@ export default function BrandPage() {
     return <div>Error loading content</div>;
   }
 
+
   return (
     <div>
       <Carousel data={[brand]} maxHeight="500px" isBrand={true} />
       <ExclusiveSale id={id} />
-      <ProductBanner
+      {/* <ProductBanner
         banners={allBanners?.filter(
           (banner) => banner?.bannerFor === "product"
         )}key={brand?.id}
-      />
+      /> */}
       <ShopByCategory id={id} />
     </div>
   );

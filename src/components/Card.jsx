@@ -25,9 +25,9 @@ function Card({ product }) {
         {discount && <span className="discount-tag">{discount}</span>}
         <img src={mainImage} alt={name} />
         <div className="wishlist-btn-wrapper">
-          <button className="wishlist-btn">
+          {/* <button className="wishlist-btn">
             <FiHeart />
-          </button>
+          </button> */}
           {/* <button className="wishlist-btn">qqqqq</button> */}
         </div>
       </div>

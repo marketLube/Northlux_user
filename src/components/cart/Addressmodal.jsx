@@ -61,7 +61,6 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     e.preventDefault();
 
     if (mode === "cart") {
-      // For cart mode, check if either saved address is selected or all required fields are filled
       if (!selectedAddress &&
           (!formData.building ||
            !formData.street ||
@@ -72,7 +71,6 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
         return;
       }
       handlePlaceOrder();
-      handleWhatsAppRedirect();
     } else {
       // For address mode, check if all required fields are filled
       if (!formData.building ||
@@ -112,7 +110,12 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
       (fullName && building && street && city && state && pincode)
     ) {
       const address = selectedAddress ? selectedAddress : formData;
-      placeOrder(address);
+      placeOrder(address, {
+        onSuccess: () => {
+          handleWhatsAppRedirect();
+          onClose();
+        }
+      });
     } else {
       toast.warning(
         "Please select an address or fill in all required fields.",

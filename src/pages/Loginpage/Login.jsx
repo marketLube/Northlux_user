@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/queries/auth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const [showPassword, setshowPassword] = useState(false);
   const { mutate: loginMutation, isLoading } = useLogin();
 
   const handleChange = (e) => {
@@ -44,15 +45,21 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group password-input">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="Password"
               required
             />
+            <span
+              className="password-toggle"
+              onClick={() => setshowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           <button type="submit" className="login-button" disabled={isLoading}>

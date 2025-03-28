@@ -4777,6 +4777,20 @@ body.modal-open {
   outline: none;
   border-color: #666;
 }
+.login-container .login-card .password-input {
+  position: relative;
+}
+.login-container .login-card .password-input input {
+  padding-right: 35px;
+}
+.login-container .login-card .password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
 .login-container .login-card .login-button {
   width: 100%;
   padding: 12px;
@@ -4839,6 +4853,12 @@ body.modal-open {
   }
   .login-container .login-card {
     padding: 24px;
+  }
+  .login-container .password-input input {
+    padding-right: 25px;
+  }
+  .login-container .password-toggle {
+    right: 10px;
   }
 }
 .shop-by {

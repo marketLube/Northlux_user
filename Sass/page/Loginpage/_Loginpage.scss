@@ -50,6 +50,23 @@
       }
     }
 
+    .password-input {
+      position: relative;
+
+      input {
+        padding-right: 35px;
+      }
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #666;
+    }
+
     .login-button {
       width: 100%;
       padding: 12px;
@@ -123,6 +140,14 @@
 
     .login-card {
       padding: 24px;
+    }
+
+    .password-input input {
+      padding-right: 25px;
+    }
+
+    .password-toggle {
+      right: 10px;
     }
   }
 }

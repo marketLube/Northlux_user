@@ -244,7 +244,7 @@ function ProductDetailsContent() {
             </div>
           </div>
 
-          <div className="section specifications">
+          {/* <div className="section specifications">
             <h3>Product Specification</h3>
             <ul>
               <li>Uses only 10W power</li>
@@ -253,7 +253,7 @@ function ProductDetailsContent() {
               <li>Long lifespan of up to 50,000 hours</li>
               <li>Fits E27 base sockets</li>
             </ul>
-          </div>
+          </div> */}
 
           {product?.totalRatings > 0 && (
             <div className="section reviews">

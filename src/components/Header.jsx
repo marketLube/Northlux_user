@@ -297,9 +297,9 @@ export default function Header() {
           )}
         </div>
 
-        <div className="header-item" onClick={toggleBrandsList}>
+        {/* <div className="header-item" onClick={toggleBrandsList}>
           Brands
-        </div>
+        </div> */}
 
         {/* <BrandsList
           isOpen={isBrandsListOpen || selectedCategory !== null}

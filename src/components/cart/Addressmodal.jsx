@@ -28,14 +28,14 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
   const { mutate: placeOrder, isPending: isOrderPending } = usePlaceOrder();
   const savedAddresses = user?.address;
 
-  useEffect(()=>{
+  useEffect(() => {
     updatedUser();
-    },[])
+  }, []);
 
-    const updatedUser = async()=>{
-      const response = await userService.getAuthUser();
-      dispatch(setUser(response.user));
-    }
+  const updatedUser = async () => {
+    const response = await userService.getAuthUser();
+    dispatch(setUser(response.user));
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -61,23 +61,27 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     e.preventDefault();
 
     if (mode === "cart") {
-      if (!selectedAddress &&
-          (!formData.building ||
-           !formData.street ||
-           !formData.city ||
-           !formData.state ||
-           !formData.pincode)) {
+      if (
+        !selectedAddress &&
+        (!formData.building ||
+          !formData.street ||
+          !formData.city ||
+          !formData.state ||
+          !formData.pincode)
+      ) {
         toast.warning("Please select an address or fill all required fields");
         return;
       }
       handlePlaceOrder();
     } else {
       // For address mode, check if all required fields are filled
-      if (!formData.building ||
-          !formData.street ||
-          !formData.city ||
-          !formData.state ||
-          !formData.pincode) {
+      if (
+        !formData.building ||
+        !formData.street ||
+        !formData.city ||
+        !formData.state ||
+        !formData.pincode
+      ) {
         toast.warning("Please fill all required fields");
         return;
       }
@@ -111,10 +115,11 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     ) {
       const address = selectedAddress ? selectedAddress : formData;
       placeOrder(address, {
-        onSuccess: () => {
-          handleWhatsAppRedirect();
+        onSuccess: (data) => {
+          console.log(data, "data");
+          handleWhatsAppRedirect(data.order);
           onClose();
-        }
+        },
       });
     } else {
       toast.warning(
@@ -126,16 +131,16 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     }
   };
 
-  const handleWhatsAppRedirect = () => {
-    const deliveryAddress = selectedAddress
-      ? savedAddresses.find((addr) => addr.id === selectedAddress)?.address
-      : `${formData.building}, ${formData.street}, ${formData.landmark}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
+  const handleWhatsAppRedirect = (data) => {
+    // const deliveryAddress = selectedAddress
+    //   ? savedAddresses.find((addr) => addr.id === selectedAddress)?.address
+    //   : `${formData.building}, ${formData.street}, ${formData.landmark}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
 
     const message = `
     *New Order*
     ------------------
     *Delivery Address:*
-    ${deliveryAddress}`;
+    ${data.deliveryAddress}`;
     const encodedMessage = encodeURIComponent(message);
     const phoneNumber = "918714441727";
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -252,24 +257,26 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
 
         {mode === "cart" ? (
           <div className="modal-footer">
-          <label className="save-address">
-            <input
-              type="checkbox"
-              name="saveAddress"
-              checked={formData.saveAddress}
-              onChange={handleInputChange}
-              disabled={user?.address?.length >=3 }
-            />
-            {user?.address?.length >=3 ? "You can only save 3 addresses go to profile to delete some" : "Save this address for future purchases"}
-          </label>
-          <button
-            className="proceed-btn"
-            disabled={isOrderPending}
-            onClick={handlePlaceOrder}
-          >
-            {isOrderPending ? <ButtonLoading /> : <span>Place Order</span>}
-          </button>
-        </div>
+            <label className="save-address">
+              <input
+                type="checkbox"
+                name="saveAddress"
+                checked={formData.saveAddress}
+                onChange={handleInputChange}
+                disabled={user?.address?.length >= 3}
+              />
+              {user?.address?.length >= 3
+                ? "You can only save 3 addresses go to profile to delete some"
+                : "Save this address for future purchases"}
+            </label>
+            <button
+              className="proceed-btn"
+              disabled={isOrderPending}
+              onClick={handlePlaceOrder}
+            >
+              {isOrderPending ? <ButtonLoading /> : <span>Place Order</span>}
+            </button>
+          </div>
         ) : (
           <div className="modal-footer">
             <button

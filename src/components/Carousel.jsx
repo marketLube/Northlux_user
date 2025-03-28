@@ -3,7 +3,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
-function Carousel({ data, maxHeight, width, isBrand = false }) {
+function Carousel({
+  data,
+  maxHeight,
+  width,
+  isBrand = false,
+  showButton = true,
+}) {
   const settings = {
     dots: true,
     infinite: true,
@@ -24,7 +30,7 @@ function Carousel({ data, maxHeight, width, isBrand = false }) {
         {data?.map((item, index) => (
           <div key={isBrand ? item.brand.bannerImage : item.image}>
             <img
-              src={isBrand ? item.brand.bannerImage : item.image }
+              src={isBrand ? item.brand.bannerImage : item.image}
               alt={item.alt}
               className="carousel-image"
             />
@@ -35,8 +41,15 @@ function Carousel({ data, maxHeight, width, isBrand = false }) {
                   {item?.description ||
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
                 </p>
-                <Link style={{textDecoration:"none"}} className="carousel-button" to={"/products"}>Shop Now</Link>
-
+                {showButton && (
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    className="carousel-button"
+                    to={"/products"}
+                  >
+                    Shop Now
+                  </Link>
+                )}
               </div>
             )}
           </div>

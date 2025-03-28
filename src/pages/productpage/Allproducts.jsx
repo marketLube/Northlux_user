@@ -402,7 +402,7 @@ function AllProductsContent() {
 
   return (
     <div className="product-page">
-      <Carousel data={allBanners?.filter((banner) => banner?.bannerFor === "hero")} maxHeight="25rem" />
+      <Carousel data={allBanners?.filter((banner) => banner?.bannerFor === "hero")} maxHeight="25rem" showButton={false} />
       <div className="product-section">
         <div className="breadcrumb">
           <span>Home</span> / <span>All Products</span>
@@ -709,9 +709,9 @@ function AllProductsContent() {
             ))}
           </div>
         </div>
-          <div className="pagination">
+          {/* <div className="pagination">
             <Pagination />
-          </div>
+          </div> */}
       </div>
     </div>
   );

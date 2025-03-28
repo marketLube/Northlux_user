@@ -31,11 +31,11 @@ export default function BrandPage() {
     <div>
       <Carousel data={[brand]} maxHeight="500px" isBrand={true} />
       <ExclusiveSale id={id} />
-      {/* <ProductBanner
+      <ProductBanner
         banners={allBanners?.filter(
           (banner) => banner?.bannerFor === "product"
         )}key={brand?.id}
-      /> */}
+      />
       <ShopByCategory id={id} />
     </div>
   );

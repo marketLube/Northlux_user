@@ -36,8 +36,6 @@ export default function Header() {
     error: categoriesError,
   } = useCategories();
 
-  console.log(data,"data");
-
   const { data: products, isLoading } = useProducts();
 
   useEffect(() => {

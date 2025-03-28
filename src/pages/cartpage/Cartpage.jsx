@@ -55,6 +55,7 @@ function Cartpage() {
   const { mutate: removeCoupon, isLoading: isRemovingCoupon } =
     useRemoveCoupon();
 
+
   const {
     data: couponsData,
     isLoading: isCouponsLoading,
@@ -191,7 +192,10 @@ function Cartpage() {
     console.log(response);
     toast.success("Order placed successfully");
     setIsAddressModalOpen(false);
-  };
+  }
+
+  
+
 
   return (
     <div className="cart-page">

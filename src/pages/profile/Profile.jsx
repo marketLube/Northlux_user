@@ -15,6 +15,7 @@ const Profile = () => {
     name: user?.username,
     phone: user?.phonenumber,
   });
+  const [phoneError, setPhoneError] = useState("");
   const dispatch = useDispatch();
 
   // Update active tab when URL parameter changes
@@ -37,6 +38,13 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate phone number
+    if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
+      setPhoneError("Phone number must be exactly 10 digits");
+      return;
+    }
+
     if (
       formData.name.trim() === user?.username &&
       formData.phone.trim() === user?.phonenumber
@@ -44,8 +52,8 @@ const Profile = () => {
       toast.error("No changes made");
       return;
     }
+
     try {
-      e.preventDefault();
       const user = await userService.updateUser({
         username: formData.name,
         phonenumber: formData.phone,
@@ -53,9 +61,19 @@ const Profile = () => {
       console.log(user);
       toast.success("Profile updated successfully");
       dispatch(setUser(user));
-      // Handle form submission
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    // Only allow digits
+    const phoneNumber = value.replace(/\D/g, '');
+    setFormData({ ...formData, phone: phoneNumber });
+    // Clear error when user starts typing valid numbers
+    if (/^\d{10}$/.test(phoneNumber)) {
+      setPhoneError("");
     }
   };
 
@@ -96,10 +114,10 @@ const Profile = () => {
                 <input
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
+                  onChange={handlePhoneChange}
+                  maxLength={10}
                 />
+                {phoneError && <span className="error-message">{phoneError}</span>}
               </div>
 
               {/* <div className="form-group">

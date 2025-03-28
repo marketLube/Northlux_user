@@ -4258,6 +4258,12 @@ body.modal-open {
   font-size: 0.75rem;
   margin-top: 0.5rem;
 }
+.profile-container .profile-content .form-group .error-message {
+  color: #ff4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
 .profile-container .profile-content .form-footer {
   display: flex;
   gap: 1rem;

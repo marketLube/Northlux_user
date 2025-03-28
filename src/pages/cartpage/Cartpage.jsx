@@ -492,7 +492,7 @@ function Cartpage() {
         cancelText="Keep"
         type="danger"
       />
-      {displayRazorpay && <RenderRazorpay orderId={orderDetails.orderId} keyId={keyId} keySecret={keySecret} currency={orderDetails.currency} amount={orderDetails.amount} address={address} />}
+
     </div>
   );
 }

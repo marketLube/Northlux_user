@@ -537,17 +537,6 @@ ul {
     text-align: center;
   }
 }
-.carousel-container .carousel-content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -20px;
-  width: calc(100% + 40px);
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
-  z-index: -1;
-  border-radius: 8px;
-}
 .carousel-container .carousel-content h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   font-size: 48px;
@@ -1209,6 +1198,7 @@ ul {
   overflow: hidden;
   max-width: 100vw;
   margin-bottom: 4rem;
+  margin-top: 4rem;
 }
 .product-banner__title {
   font-size: 6rem;

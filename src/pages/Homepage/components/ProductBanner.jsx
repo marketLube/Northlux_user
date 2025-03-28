@@ -3,38 +3,11 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FreeMode, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import React from "react";
 
-// const data = [
-//   {
-//     id: 1,
-//     title: "Product 1",      image: "/images/banner/Banner1.png",
-
-//     categories: ["Category 1"],
-//     name: "product-1",
-//   },
-//   {
-//     id: 2,
-//     title: "Product 2",      image: "/images/banner/Banner2.png",
-
-//     categories: ["Category 1"],
-//     name: "product-1",
-//   },
-//   {
-//     id: 3,
-//     title: "Product 3",      image: "/images/banner/Banner3.png",
-
-//     categories: ["Category 1"],
-//     name: "product-1",
-//   },
-
-// ];
-
 function ProductBanner({banners}) {
-  const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Add window resize listener to update slide widths dynamically

@@ -62,11 +62,11 @@ const AddressModal = ({ isOpen, onClose, mode = "cart", onSubmit }) => {
     }
     onSubmit(selectedAddress);
 
-    // const updatedUser = {
-    //   ...user,
-    //   address: formData,
-    // };
-    // updateUser(updatedUser);
+    const updatedUser = {
+      ...user,
+      address: formData,
+    };
+    updateUser(updatedUser);
     setFormData({
       fullName: user?.username,
       building: "",

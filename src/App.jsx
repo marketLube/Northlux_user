@@ -13,6 +13,7 @@ function App() {
       // duration: 1000,
       // easing: "ease-in-sine",
       // delay: 100,
+
     });
   }, []);
 

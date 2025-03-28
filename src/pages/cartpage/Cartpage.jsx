@@ -38,21 +38,22 @@ function Cartpage() {
   const [itemToRemove, setItemToRemove] = useState(null);
   const [selectedCoupon, setSelectedCoupon] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
- const[address,setAddress] = useState(null);
-//razorpay
+  const [address, setAddress] = useState(null);
+  //razorpay
   const [displayRazorpay, setDisplayRazorpay] = useState(false);
   const [orderDetails, setOrderDetails] = useState({
     orderId: null,
     currency: null,
     amount: null,
-   });
+  });
   const navigate = useNavigate();
   const { data: cartData, isLoading, error } = useCart();
   const { mutate: updateQuantity, isLoading: isUpdating } =
     useUpdateCartQuantity();
   const { mutate: removeFromCart, isLoading: isRemoving } = useRemoveFromCart();
   const { mutate: applyCoupon, isLoading: isApplyingCoupon } = useApplyCoupon();
-  const { mutate: removeCoupon, isLoading: isRemovingCoupon } = useRemoveCoupon();
+  const { mutate: removeCoupon, isLoading: isRemovingCoupon } =
+    useRemoveCoupon();
 
   const {
     data: couponsData,
@@ -181,26 +182,14 @@ function Cartpage() {
     );
   }
 
-  const handleSubmit = async (selectedAddress , paymentMethod = "razorpay") => {
+  const handleSubmit = async (selectedAddress, paymentMethod = "COD") => {
     setAddress(selectedAddress);
-    if (paymentMethod === "razorpay") {
-      const response = await apiClient.post(`/order/paymentIntent`);
-      if(response && response.order_id){
-        setOrderDetails({
-          orderId: response.order_id,
-          currency: response.currency,
-          amount: response.amount,
-        });
-        setDisplayRazorpay(true);
-      }
-
-    }else{
-      const response = await apiClient.post(`/order/placeOrder`, {
-        selectedAddress,
-        paymentMethod,
-      });
-      console.log(response);
-    }
+    const response = await apiClient.post(`/order/placeOrder`, {
+      selectedAddress,
+      paymentMethod,
+    });
+    console.log(response);
+    toast.success("Order placed successfully");
     setIsAddressModalOpen(false);
   };
 
@@ -492,7 +481,6 @@ function Cartpage() {
         cancelText="Keep"
         type="danger"
       />
-
     </div>
   );
 }

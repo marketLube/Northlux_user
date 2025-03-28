@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useUpdateUser } from "../../hooks/queries/user";
 import { usePlaceOrder } from "../../hooks/queries/order";
 import ButtonLoading from "../ButtonLoadingSpinners";
 import { toast } from "sonner";
+import { setUser } from "../../redux/features/user/userSlice";
+import userService from "../../api/services/userService";
 
-const AddressModal = ({ isOpen, onClose, mode = "cart", onSubmit }) => {
+const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
   const user = useSelector((state) => state.user.user);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     fullName: user?.username,
     building: "",
@@ -24,6 +27,15 @@ const AddressModal = ({ isOpen, onClose, mode = "cart", onSubmit }) => {
   const { mutate: updateUser, isPending } = useUpdateUser();
   const { mutate: placeOrder, isPending: isOrderPending } = usePlaceOrder();
   const savedAddresses = user?.address;
+
+  useEffect(()=>{
+    updatedUser();
+    },[])
+
+    const updatedUser = async()=>{
+      const response = await userService.getAuthUser();
+      dispatch(setUser(response.user));
+    }
 
   useEffect(() => {
     if (isOpen) {
@@ -48,25 +60,37 @@ const AddressModal = ({ isOpen, onClose, mode = "cart", onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(selectedAddress);
-    if (
-      !selectedAddress &&
-      (formData.building === "" ||
-        formData.street === "" ||
-        formData.city === "" ||
-        formData.state === "" ||
-        formData.pincode === "")
-    ) {
-      toast.warning("Please fill all the fields");
-      return;
+    if (mode === "cart") {
+      // For cart mode, check if either saved address is selected or all required fields are filled
+      if (!selectedAddress &&
+          (!formData.building ||
+           !formData.street ||
+           !formData.city ||
+           !formData.state ||
+           !formData.pincode)) {
+        toast.warning("Please select an address or fill all required fields");
+        return;
+      }
+      handlePlaceOrder();
+      handleWhatsAppRedirect();
+    } else {
+      // For address mode, check if all required fields are filled
+      if (!formData.building ||
+          !formData.street ||
+          !formData.city ||
+          !formData.state ||
+          !formData.pincode) {
+        toast.warning("Please fill all required fields");
+        return;
+      }
+      const updatedUser = {
+        ...user,
+        address: formData,
+      };
+      updateUser(updatedUser);
     }
-    onSubmit(selectedAddress);
 
-    const updatedUser = {
-      ...user,
-      address: formData,
-    };
-    updateUser(updatedUser);
+    // Reset form and close modal
     setFormData({
       fullName: user?.username,
       building: "",
@@ -77,10 +101,29 @@ const AddressModal = ({ isOpen, onClose, mode = "cart", onSubmit }) => {
       pincode: "",
       saveAddress: false,
     });
+    onClose();
+  };
+
+  const handlePlaceOrder = () => {
+    const { fullName, building, street, city, state, pincode } = formData;
+
+    if (
+      selectedAddress ||
+      (fullName && building && street && city && state && pincode)
+    ) {
+      const address = selectedAddress ? selectedAddress : formData;
+      placeOrder(address);
+    } else {
+      toast.warning(
+        "Please select an address or fill in all required fields.",
+        {
+          position: "top-right",
+        }
+      );
+    }
   };
 
   const handleWhatsAppRedirect = () => {
-    onSubmit(selectedAddress);
     const deliveryAddress = selectedAddress
       ? savedAddresses.find((addr) => addr.id === selectedAddress)?.address
       : `${formData.building}, ${formData.street}, ${formData.landmark}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
@@ -204,35 +247,26 @@ const AddressModal = ({ isOpen, onClose, mode = "cart", onSubmit }) => {
           </form>
         </div>
 
-
         {mode === "cart" ? (
           <div className="modal-footer">
-            <label className="save-address">
-              <input
-                type="checkbox"
-                name="saveAddress"
-                checked={formData.saveAddress}
-                onChange={handleInputChange}
-              />
-              Save this address for future purchases
-            </label>
-            <button
-              className="proceed-btn"
-              disabled={isOrderPending}
-              onClick={handleWhatsAppRedirect}
-            >
-              {isOrderPending ? (
-                <ButtonLoading />
-              ) : (
-                <>
-                  <span>
-                    <FaWhatsapp size={15} />
-                  </span>
-                  <span>Place Order</span>
-                </>
-              )}
-            </button>
-          </div>
+          <label className="save-address">
+            <input
+              type="checkbox"
+              name="saveAddress"
+              checked={formData.saveAddress}
+              onChange={handleInputChange}
+              disabled={user?.address?.length >=3 }
+            />
+            {user?.address?.length >=3 ? "You can only save 3 addresses go to profile to delete some" : "Save this address for future purchases"}
+          </label>
+          <button
+            className="proceed-btn"
+            disabled={isOrderPending}
+            onClick={handlePlaceOrder}
+          >
+            {isOrderPending ? <ButtonLoading /> : <span>Place Order</span>}
+          </button>
+        </div>
         ) : (
           <div className="modal-footer">
             <button

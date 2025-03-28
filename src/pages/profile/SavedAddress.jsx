@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import AddressModal from "../../components/cart/Addressmodal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import userService from "../../api/services/userService";
+import { setUser } from "../../redux/features/user/userSlice";
+import { toast } from "sonner";
 
 const SavedAddress = () => {
   const user = useSelector((state) => state.user.user);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const addresses = user?.address;
+  const dispatch = useDispatch();
+
+  const handleDeleteAddress = async (id) => {
+    try {
+      const response = await userService.deleteAddress(id);
+      dispatch(setUser(response?.data));
+      toast.success("Address deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete address");
+    }
+  };
 
   return (
     <div className="saved-address-section">
@@ -21,7 +35,7 @@ const SavedAddress = () => {
           <div key={index} className="address-card">
             <div className="card-header">
               <span className="address-label">{addr.label}</span>
-              <button className="delete-btn">
+              <button className="delete-btn" onClick={() => handleDeleteAddress(addr._id)}>
                 <FiTrash2 />
               </button>
             </div>

@@ -154,9 +154,9 @@ ${index + 1}. ${item.productId.name}
    Quantity: ${item.quantity}
    Price: ₹${item.price}
 
-// Product Images:
-// ${item.productId.images.map(img => `${img}`).join('\n')}
-// `).join('\n')}
+Product Images:
+${item.productId.images.map(img => `${img}`).join('\n')}
+`).join('\n')}
 
 *Order Details:*
 ------------------

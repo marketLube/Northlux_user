@@ -135,36 +135,50 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
     console.log(data, "data");
 
     const message = `
-*Hello! I would like to place a new order*
-------------------
+    *Hello! I would like to place a new order*
+    ------------------
 
-*My Contact Details:*
-Email: ${data.user.email}
+    *My Contact Details:*
+    Email: ${data.user.email}
 
-*Please deliver to:*
-${data.deliveryAddress.fullName}
-${data.deliveryAddress.street}
-${data.deliveryAddress.landmark ? data.deliveryAddress.landmark + '\n' : ''}${data.deliveryAddress.city}
-${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
+    *Please deliver to:*
+    ${data.deliveryAddress.fullName}
+    ${data.deliveryAddress.street}
+    ${data.deliveryAddress.landmark ? data.deliveryAddress.landmark + "\n" : ""}${
+          data.deliveryAddress.city
+        }
+    ${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
 
-*I would like to order:*
-${data.products.map((item, index) => `
-${index + 1}. ${item.productId.name}
-   ${item.variantId?.attributes?.title ? `Variant: ${item.variantId.attributes.title}` : ''}
-   Quantity: ${item.quantity}
-   Price: ₹${item.price}
+    *I would like to order:*
+    ${data.products
+      .map(
+        (item, index) => `
+    ${index + 1}. ${item.productId.name}
+      ${
+        item.variantId?.attributes?.title
+          ? `Variant: ${item.variantId.attributes.title}`
+          : ""
+      }
+      Quantity: ${item.quantity}
+      Price: ₹${item.price}
 
-Product Image:
-${item.variantId?.images?.length ? item.variantId.images[0] : item.productId.images[0]}
-`).join('\n')}
+    Product Image:
+    ${
+      item.variantId?.images?.length
+        ? item.variantId.images[0]
+        : item.productId.images[0]
+    }
+    `
+      )
+      .join("\n")}
 
-*Order Details:*
-------------------
-Total Amount: ₹${data.totalAmount}
-Payment Method: ${data.paymentMethod}
-${data.couponApplied ? `Coupon Code: ${data.couponApplied}` : ''}
+    *Order Details:*
+    ------------------
+    Total Amount: ₹${data.totalAmount}
+    Payment Method: ${data.paymentMethod}
+    ${data.couponApplied ? `Coupon Code: ${data.couponApplied}` : ""}
 
-Please confirm my order. Thank you!`;
+    Please confirm my order. Thank you!`;
 
     const encodedMessage = encodeURIComponent(message);
     const phoneNumber = "918714441727";

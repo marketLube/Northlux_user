@@ -11,7 +11,7 @@ const ShopByCategory = ({ id }) => {
     brandId: id,
     categoryId: activeTab,
   });
-  const { data: categories } = useCategories();
+  const { data: categories } = useCategories({brandId: id});
 
   // const categories = ["sholder bags", "t-shirts", "shoes", "bags", "sneakers"];
 

@@ -132,15 +132,45 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
   };
 
   const handleWhatsAppRedirect = (data) => {
-    // const deliveryAddress = selectedAddress
-    //   ? savedAddresses.find((addr) => addr.id === selectedAddress)?.address
-    //   : `${formData.building}, ${formData.street}, ${formData.landmark}, ${formData.city}, ${formData.state} - ${formData.pincode}`;
+    console.log(data, "data");
+
+    // Format date to be more readable
+    const orderDate = new Date(data.createdAt).toLocaleString();
+    const expectedDeliveryDate = new Date(data.expectedDelivery).toLocaleString();
 
     const message = `
-    *New Order*
-    ------------------
-    *Delivery Address:*
-    ${data.deliveryAddress}`;
+      *New Order Details*
+      ------------------
+      *Order ID:* ${data._id}
+      *Order Date:* ${orderDate}
+      *Expected Delivery:* ${expectedDeliveryDate}
+
+      *Customer Details:*
+      Name: ${data.user.email}
+
+      *Delivery Address:*
+      ${data.deliveryAddress.fullName}
+      ${data.deliveryAddress.street}
+      ${data.deliveryAddress.landmark ? data.deliveryAddress.landmark + '\n' : ''}${data.deliveryAddress.city}
+      ${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
+
+      *Order Items:*
+      ${data.products.map((item, index) => `
+      ${index + 1}. ${item.name || item.productName}
+        Quantity: ${item.quantity}
+        Price: ₹${item.price}
+      `).join('')}
+
+      *Order Summary:*
+      ------------------
+      *Total Amount:* ₹${data.totalAmount}
+      *Payment Method:* ${data.paymentMethod}
+      *Payment Status:* ${data.paymentStatus}
+      *Order Status:* ${data.status}
+      ${data.couponApplied ? `*Coupon Applied:* ${data.couponApplied}` : ''}
+
+      Thank you for your order! We will process it shortly.`;
+
     const encodedMessage = encodeURIComponent(message);
     const phoneNumber = "918714441727";
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;

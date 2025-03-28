@@ -134,10 +134,6 @@ const AddressModal = ({ isOpen, onClose, mode = "cart" }) => {
   const handleWhatsAppRedirect = (data) => {
     console.log(data, "data");
 
-    // Format date to be more readable
-    const orderDate = new Date(data.createdAt).toLocaleString();
-    const expectedDeliveryDate = new Date(data.expectedDelivery).toLocaleString();
-
     const message = `
 *Hello! I would like to place a new order*
 ------------------
@@ -153,10 +149,14 @@ ${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
 
 *I would like to order:*
 ${data.products.map((item, index) => `
-${index + 1}. ${item.name || item.productName}
+${index + 1}. ${item.productId.name}
+   Brand: ${item.productId.brand}
    Quantity: ${item.quantity}
    Price: ₹${item.price}
-`).join('')}
+
+// Product Images:
+// ${item.productId.images.map(img => `${img}`).join('\n')}
+// `).join('\n')}
 
 *Order Details:*
 ------------------

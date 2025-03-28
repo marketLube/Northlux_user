@@ -52,9 +52,9 @@ const OrderHistory = () => {
                       <div key={order._id} className="order-row">
                         <div className="product-col">
                           <div className="product-details">
-                            <img
-                              src={order?.products[0]?.productId?.images[0]}
-                              alt={order?.products[0]?.productId?.name}
+                          <img
+                              src={order.products[0].variantId ? order.products[0].variantId.images[0] : order?.products[0]?.productId?.images[0]}
+                              alt={order.products[0].variantId ? order.products[0].variantId.name : order?.products[0]?.productId?.name}
                             />
                             <div className="info">
                               <h3>{order?.products[0]?.productId?.name}</h3>

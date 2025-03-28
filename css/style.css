@@ -4336,6 +4336,9 @@ body.modal-open {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
 }
+.saved-address-section .remove-address {
+  color: gray;
+}
 .saved-address-section .address-card {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -4408,6 +4411,21 @@ body.modal-open {
   justify-content: center;
   font-size: 1.5rem;
   margin-bottom: 0.25rem;
+}
+.saved-address-section .add-address-card .plus-icon-removed {
+  width: 32px;
+  height: 32px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: gray;
+}
+.saved-address-section .add-address-card .plus-icon-span-removed {
+  color: gray;
 }
 .saved-address-section .add-address-card span {
   font-size: 0.875rem;

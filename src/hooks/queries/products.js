@@ -29,10 +29,10 @@ async function getProducts(filters) {
         params.append("sort", "-createdAt");
         break;
       case "price-low":
-        params.append("sort", "price");
+        params.append("sort", "price-low");
         break;
       case "price-high":
-        params.append("sort", "-price");
+        params.append("sort", "-price-high");
         break;
       default:
         params.append("sort", "-createdAt");

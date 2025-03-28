@@ -11,11 +11,11 @@ const ShopByCategory = ({ id }) => {
     brandId: id,
     categoryId: activeTab,
   });
-  const { allCategories } = useCategories();
+  const { data: categories } = useCategories();
 
   // const categories = ["sholder bags", "t-shirts", "shoes", "bags", "sneakers"];
 
-
+const allCategories = categories?.envelop?.data || [];
 
   return (
     <section className="shop-by-category">

@@ -150,12 +150,12 @@ ${data.deliveryAddress.state} - ${data.deliveryAddress.pincode}
 *I would like to order:*
 ${data.products.map((item, index) => `
 ${index + 1}. ${item.productId.name}
-   Brand: ${item.productId.brand}
+   ${item.variantId?.attributes?.title ? `Variant: ${item.variantId.attributes.title}` : ''}
    Quantity: ${item.quantity}
    Price: ₹${item.price}
 
-Product Images:
-${item.productId.images.map(img => `${img}`).join('\n')}
+Product Image:
+${item.variantId?.images?.length ? item.variantId.images[0] : item.productId.images[0]}
 `).join('\n')}
 
 *Order Details:*

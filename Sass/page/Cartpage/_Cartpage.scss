@@ -510,3 +510,53 @@
     }
   }
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.quantity-controls {
+  button {
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.remove-item {
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.apply-btn {
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed !important;
+    background: #f5f5f5 !important;
+  }
+}
+
+.loading-spinner {
+  &.small {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.quantity-controls button,
+.remove-item,
+.apply-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loading-spinner {
+    margin: 0 auto;
+  }
+}

@@ -3,33 +3,42 @@ import { couponService } from "../../api/services/couponService";
 import { toast } from "sonner";
 
 export const useGetCoupons = () => {
-  return useQuery({ queryKey: ["coupons"], queryFn: couponService.getCoupons });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["coupons"],
+    queryFn: couponService.getCoupons,
+  });
+  return { data, isLoading, error };
 };
 
 export const useApplyCoupon = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (couponId) => couponService.applyCoupon(couponId),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(["cart"]); // Refresh cart data
-      toast.success("Coupon applied successfully!");
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cart"]);
+      toast.success("Coupon applied successfully");
     },
     onError: (error) => {
       toast.error(error.response?.data?.message || "Failed to apply coupon");
     },
   });
+  return { mutate, isLoading };
 };
 
 // Remove coupon mutation
 export const useRemoveCoupon = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: () => couponService.removeCoupon(),
+  const { mutate, isLoading } = useMutation({
+    mutationFn: couponService.removeCoupon,
     onSuccess: () => {
-      queryClient.invalidateQueries(["cart"]); // Refresh cart data
-      toast.success("Coupon removed successfully!");
+      queryClient.invalidateQueries(["cart"]);
+      toast.success("Coupon removed successfully");
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to remove coupon");
     },
   });
+  return { mutate, isLoading };
 };

@@ -48,13 +48,10 @@ function Cartpage() {
   });
   const navigate = useNavigate();
   const { data: cartData, isLoading, error } = useCart();
-  const { mutate: updateQuantity, isLoading: isUpdating } =
-    useUpdateCartQuantity();
-  const { mutate: removeFromCart, isLoading: isRemoving } = useRemoveFromCart();
-  const { mutate: applyCoupon, isLoading: isApplyingCoupon } = useApplyCoupon();
-  const { mutate: removeCoupon, isLoading: isRemovingCoupon } =
-    useRemoveCoupon();
-
+  const { mutate: updateQuantity, isPending: isUpdating } = useUpdateCartQuantity();
+  const { mutate: removeFromCart, isPending: isRemoving } = useRemoveFromCart();
+  const { mutate: applyCoupon, isPending: isApplyingCoupon } = useApplyCoupon();
+  const { mutate: removeCoupon, isPending: isRemovingCoupon } = useRemoveCoupon();
 
   const {
     data: couponsData,
@@ -80,9 +77,9 @@ function Cartpage() {
     }
   }, [cartData?.data?.couponDetails]);
 
-  if (isLoading || isCouponsLoading || isRemoving || isUpdating){
-    return <LoadingSpinner />;
-  }
+
+  console.log(isLoading, "isLoading", isCouponsLoading, "isCouponsLoading" ,isRemoving,"isRemoving",isUpdating,"isUpdating",isApplyingCoupon,"isApplyingCoupon",isRemovingCoupon,"isRemovingCoupon");
+  if (isLoading || isCouponsLoading || isRemoving || isUpdating || isApplyingCoupon || isRemovingCoupon) return <LoadingSpinner />;
 
   if (error) {
     throw error;
@@ -129,7 +126,6 @@ function Cartpage() {
     setShowConfirmModal(true);
   };
 
-  console.log(itemToRemove);
   // Add this function to handle the actual removal
   const confirmRemoveItem = () => {
     if (itemToRemove) {
@@ -196,6 +192,9 @@ function Cartpage() {
     toast.success("Order placed successfully");
     setIsAddressModalOpen(false);
   }
+
+
+
 
   return (
     <div className="cart-page">

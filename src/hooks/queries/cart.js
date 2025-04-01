@@ -42,37 +42,65 @@ export const useAddToCart = () => {
 export const useUpdateCartQuantity = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  return useMutation({
     mutationFn: ({ productId, variantId, action }) =>
       cartService.updateQuantity(productId, variantId, action),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["cart"]);
+    onMutate: ({ productId, variantId, action }) => {
+      // Get current cart data
+      const cart = queryClient.getQueryData(['cart']);
+      if (!cart) return;
+
+      // Create new cart with updated quantity
+      const newCart = structuredClone(cart);
+      const item = newCart.data.formattedCart.items.find(
+        item => item.product._id === productId
+      );
+
+      if (item) {
+        item.quantity += action === 'increment' ? 1 : -1;
+      }
+
+      // Update cart immediately
+      queryClient.setQueryData(['cart'], newCart);
     },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to update cart");
-    },
+    onError: () => {
+      // Refresh cart data on error
+      queryClient.invalidateQueries(['cart']);
+      toast.error("Failed to update cart");
+    }
   });
-  return { mutate, isLoading };
 };
 
 // Remove from cart mutation
 export const useRemoveFromCart = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation({
+  return useMutation({
     mutationFn: ({ productId, variantId }) =>
       cartService.removeFromCart(productId, variantId),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["cart"]);
-      toast.success("Item removed from cart");
-    },
-    onError: (error) => {
-      toast.error(
-        error.response?.data?.message || "Failed to remove item from cart"
+    onMutate: ({ productId }) => {
+      // Get current cart data
+      const cart = queryClient.getQueryData(['cart']);
+      if (!cart) return;
+
+      // Create new cart without the removed item
+      const newCart = structuredClone(cart);
+      newCart.data.formattedCart.items = newCart.data.formattedCart.items.filter(
+        item => item.product._id !== productId
       );
+
+      // Update cart immediately
+      queryClient.setQueryData(['cart'], newCart);
     },
+    onError: () => {
+      // Refresh cart data on error
+      queryClient.invalidateQueries(['cart']);
+      toast.error("Failed to remove item");
+    },
+    onSuccess: () => {
+      toast.success("Item removed from cart");
+    }
   });
-  return { mutate, isLoading };
 };
 
 // Clear cart mutation

@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 // Get cart items
 export const useCart = () => {
-  return useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["cart"],
     queryFn: cartService.getCart,
   });
+  return { data, isLoading, error };
 };
 
 // Add to cart mutation
@@ -16,7 +17,7 @@ export const useAddToCart = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: ({ productId, variantId, quantity }) =>
       cartService.addToCart(productId, variantId, quantity),
     onSuccess: () => {
@@ -34,13 +35,14 @@ export const useAddToCart = () => {
       }
     },
   });
+  return { mutate, isLoading };
 };
 
 // Update quantity mutation
 export const useUpdateCartQuantity = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: ({ productId, variantId, action }) =>
       cartService.updateQuantity(productId, variantId, action),
     onSuccess: () => {
@@ -50,13 +52,14 @@ export const useUpdateCartQuantity = () => {
       toast.error(error.response?.data?.message || "Failed to update cart");
     },
   });
+  return { mutate, isLoading };
 };
 
 // Remove from cart mutation
 export const useRemoveFromCart = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: ({ productId, variantId }) =>
       cartService.removeFromCart(productId, variantId),
     onSuccess: () => {
@@ -69,13 +72,14 @@ export const useRemoveFromCart = () => {
       );
     },
   });
+  return { mutate, isLoading };
 };
 
 // Clear cart mutation
 export const useClearCart = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: cartService.clearCart,
     onSuccess: () => {
       queryClient.invalidateQueries(["cart"]);
@@ -85,4 +89,5 @@ export const useClearCart = () => {
       toast.error(error.response?.data?.message || "Failed to clear cart");
     },
   });
+  return { mutate, isLoading };
 };

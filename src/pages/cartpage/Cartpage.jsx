@@ -80,7 +80,9 @@ function Cartpage() {
     }
   }, [cartData?.data?.couponDetails]);
 
-  if (isLoading || isCouponsLoading) return <LoadingSpinner />;
+  if (isLoading || isCouponsLoading || isRemoving || isUpdating){
+    return <LoadingSpinner />;
+  }
 
   if (error) {
     throw error;
@@ -127,6 +129,7 @@ function Cartpage() {
     setShowConfirmModal(true);
   };
 
+  console.log(itemToRemove);
   // Add this function to handle the actual removal
   const confirmRemoveItem = () => {
     if (itemToRemove) {
@@ -193,9 +196,6 @@ function Cartpage() {
     toast.success("Order placed successfully");
     setIsAddressModalOpen(false);
   }
-
-  
-
 
   return (
     <div className="cart-page">

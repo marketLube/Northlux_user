@@ -48,6 +48,8 @@ function Cartpage() {
   });
   const navigate = useNavigate();
   const { data: cartData, isLoading, error } = useCart();
+  console.log(isLoading, "isLoading");
+  console.log(cartData, "cartData");
   const { mutate: updateQuantity, isPending: isUpdating } = useUpdateCartQuantity();
   const { mutate: removeFromCart, isPending: isRemoving } = useRemoveFromCart();
   const { mutate: applyCoupon, isPending: isApplyingCoupon } = useApplyCoupon();
@@ -77,8 +79,6 @@ function Cartpage() {
     }
   }, [cartData?.data?.couponDetails]);
 
-
-  console.log(isLoading, "isLoading", isCouponsLoading, "isCouponsLoading" ,isRemoving,"isRemoving",isUpdating,"isUpdating",isApplyingCoupon,"isApplyingCoupon",isRemovingCoupon,"isRemovingCoupon");
   if (isLoading || isCouponsLoading || isRemoving || isUpdating || isApplyingCoupon || isRemovingCoupon) return <LoadingSpinner />;
 
   if (error) {

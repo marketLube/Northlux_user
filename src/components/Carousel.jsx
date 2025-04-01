@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
 function Carousel({
   data,
@@ -9,6 +10,7 @@ function Carousel({
   width,
   isBrand = false,
   showButton = true,
+  isLoading = false,
 }) {
   const settings = {
     dots: true,
@@ -23,6 +25,8 @@ function Carousel({
     customPaging: (i) => <div className="custom-dot"></div>,
     dotsClass: "slick-dots custom-dots",
   };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="carousel-container" style={{ maxHeight: maxHeight }}>

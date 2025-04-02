@@ -50,61 +50,69 @@ const OrderHistory = () => {
                   <div className="table-body">
                     {orders?.map((order) => (
                       <div key={order._id} className="order-row">
-                        <div className="product-col">
-                          <div className="product-details">
-                          <img
-                              src={order.products[0].variantId ? order.products[0].variantId.images[0] : order?.products[0]?.productId?.images[0]}
-                              alt={order.products[0].variantId ? order.products[0].variantId.name : order?.products[0]?.productId?.name}
+                      <div className="product-col">
+                        {order.products.map((product, index) => (
+                          <div key={index} className="product-details">
+                            <img
+                              src={product.variantId ? product.variantId.images[0] : product?.productId?.images[0]}
+                              alt={product.variantId ? product.variantId.name: product?.productId?.name}
                             />
                             <div className="info">
-                              <h3>{order?.products[0]?.productId?.name}</h3>
-                              <div className="order-meta">
-                                Order ID : {order?._id}{" "}
-                                <FiCopy className="copy-icon" />
-                              </div>
-                              <div className="price">
-                                ₹ {order?.products[0]?.price}
-                              </div>
+                              <h3>{product?.productId?.name.split("").length>10 ? product?.productId?.name.split("").slice(0,10).join("") + "..." : product?.productId?.name}</h3>
+                              <div className="product-price">₹ {product.price}</div>
                             </div>
                           </div>
-                        </div>
+                        ))}
+                      </div>
 
-                        <div className="status-col">
-                          <div
-                            className={`status-tag ${
-                              order?.status === "delivered"
-                                ? "delivered"
-                                : "order-placed"
-                            }`}
-                          >
-                            {order?.status}
-                          </div>
-                          <div className="delivery-info">
-                            {order?.status === "delivered"
-                              ? "Delivered on"
-                              : "Expected delivery"}
-                            <br />
-                            {order?.status === "delivered"
-                              ? order?.deliveredOn
-                              : new Date(
-                                  order?.expectedDelivery
-                                ).toLocaleDateString()}
-                          </div>
-                        </div>
-
-                        <div className="action-col">
-                          <button
-                            className={`action-btn ${
-                              order?.status === "delivered" ? "view" : "track"
-                            }`}
-                          >
-                            {order?.status === "delivered"
-                              ? "View"
-                              : "Track Order"}{" "}
-                            →
-                          </button>
+                      <div className="total-col" data-label="Total Amount">
+                        <div className="total-amount">
+                          ₹ {order.couponApplied ? order.couponApplied.finalAmount : order?.totalAmount}
                         </div>
                       </div>
+
+                      <div className="order-id-col" data-label="Order ID">
+                        <div className="order-id">
+                          {order?._id} <FiCopy className="copy-icon" />
+                        </div>
+                      </div>
+
+                      <div className="status-col">
+                        <div
+                          className={`status-tag ${
+                            order?.status === "delivered"
+                              ? "delivered"
+                              : "order-placed"
+                          }`}
+                        >
+                          {order?.status}
+                        </div>
+                        <div className="delivery-info">
+                          {order?.status === "delivered"
+                            ? "Delivered on"
+                            : "Expected delivery"}
+                          <br />
+                          {order?.status === "delivered"
+                            ? order?.deliveredOn
+                            : new Date(
+                                order?.expectedDelivery
+                              ).toLocaleDateString()}
+                        </div>
+                      </div>
+
+                      <div className="action-col">
+                        <button
+                          className={`action-btn ${
+                            order?.status === "delivered" ? "view" : "track"
+                          }`}
+                        >
+                          {order?.status === "delivered"
+                            ? "View"
+                            : "Track Order"}{" "}
+                          →
+                        </button>
+                      </div>
+                    </div>
                     ))}
                   </div>
                 </>

@@ -26,7 +26,6 @@ import apiClient from "../../api/client";
 import RenderRazorpay from "../../components/Razorpay/RenderRazorpay";
 
 // Add this array of coupons
-
 const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID;
 const keySecret = import.meta.env.VITE_RAZORPAY_KEY_SECRET;
 
@@ -46,6 +45,7 @@ function Cartpage() {
     currency: null,
     amount: null,
   });
+
   const navigate = useNavigate();
   const { data: cartData, isLoading, error } = useCart();
   const { mutate: updateQuantity, isPending: isUpdating } = useUpdateCartQuantity();
@@ -191,9 +191,6 @@ function Cartpage() {
     setIsAddressModalOpen(false);
   }
 
-
-
-
   return (
     <div className="cart-page">
       <div className="breadcrumb">
@@ -212,11 +209,11 @@ function Cartpage() {
                 className="item-image"
                 onClick={() => navigate(`/products/${item?.product?._id}`)}
               >
-                <img src={item?.product?.mainImage} alt={item?.product?.name} />
+                <img src={item?.product?.mainImage} alt={item?.product?.name.split("").length >10 ? item?.product?.name.split("").slice(0,10).join("") + "..." : item?.product?.name} />
               </div>
 
               <div className="item-details">
-                <h3>{item?.product?.name}</h3>
+                <h3>{item?.product?.name.split("").length >30 ? item?.product?.name.split("").slice(0,30).join("") + "..." : item?.product?.name}</h3>
                 <div className="product-id">#{item?.product?._id}</div>
                 <div className="quantity-controls">
                   <button

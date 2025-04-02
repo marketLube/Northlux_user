@@ -41,7 +41,6 @@ function ProductDetailsContent() {
   // Local state to track which button is loading
   const [loadingAction, setLoadingAction] = useState(null); // "buy" or "cart"
 
-
   useEffect(() => {
     setSelectedVariant(null);
 
@@ -93,7 +92,6 @@ function ProductDetailsContent() {
   };
 
   const handleSubmitReview = async (reviewData) => {
-
     const formData = new FormData();
     formData.append("rating", reviewData.rating);
     formData.append("review", reviewData.review);
@@ -115,7 +113,7 @@ function ProductDetailsContent() {
       <div className="breadcrumb">
         <span>All products</span>
         <span>/</span>
-        <span> {product?.category?.name} </span>
+        <span className="category-name"> {product?.category?.name} </span>
       </div>
 
       <div className="product-container">
@@ -163,9 +161,10 @@ function ProductDetailsContent() {
           </div>
 
           <h1 className="product-title">
-            {selectedVariant
+            {/* {selectedVariant
               ? selectedVariant?.attributes?.title
-              : product?.name}
+              : product?.name} */}
+            {product?.name}
           </h1>
 
           <div className="rating-summary">
@@ -278,7 +277,7 @@ function ProductDetailsContent() {
             </ul>
           </div> */}
 
-<div className="section reviews">
+          <div className="section reviews">
             <div className="reviews-header">
               <h3>Ratings & Reviews</h3>
               <button
@@ -456,7 +455,9 @@ function ProductDetailsContent() {
             Top Picks <span>For You</span>
           </h2>
           <div className="view-controls">
-            <span className="view-all" onClick={() => navigate("/products")}>View all</span>
+            <span className="view-all" onClick={() => navigate("/products")}>
+              View all
+            </span>
             <div className="navigation-buttons">
               <button className="nav-btn prev" onClick={() => scroll("left")}>
                 <FiChevronLeft />

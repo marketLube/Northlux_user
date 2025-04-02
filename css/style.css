@@ -2671,6 +2671,9 @@ body.filter-open {
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
+.product-details .category-name {
+  color: #2eb5af;
+}
 .product-details .product-container {
   display: flex;
   gap: 2rem;
@@ -4828,6 +4831,11 @@ body.modal-open {
   align-items: center;
   justify-content: center;
   padding: 10rem;
+}
+@media (max-width: 1400px) {
+  .login-container {
+    padding: 5rem;
+  }
 }
 .login-container .login-card {
   background: white;

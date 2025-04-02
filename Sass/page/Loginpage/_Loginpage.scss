@@ -6,6 +6,9 @@
   justify-content: center;
   //   padding: 20px;
   padding: 10rem;
+  @media (max-width: 1400px) {
+    padding: 5rem;
+  }
 
   .login-card {
     background: white;

@@ -15,6 +15,8 @@ console.log(filters);
 async function getProducts(filters) {
   const params = new URLSearchParams();
 
+console.log(filters);
+
   if (filters.categoryId) params.append("categoryId", filters.categoryId);
   if (filters.subcategoryId)
     params.append("subcategoryId", filters.subcategoryId);

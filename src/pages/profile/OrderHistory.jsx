@@ -44,6 +44,9 @@ const OrderHistory = () => {
                 <>
                   <div className="table-header">
                     <div className="product-col">Product</div>
+                    <div className="status-col">Total</div>
+                    <div className="status-col">Order Id</div>
+
                     <div className="status-col">Status</div>
                     <div className="action-col"></div>
                   </div>
@@ -71,7 +74,7 @@ const OrderHistory = () => {
                         </div>
                       </div>
 
-                      <div className="order-id-col" data-label="Order ID">
+                      <div className="order-id-col" data-label="Order ID" style={{textAlign: "left" , marginRight: "1rem"}}>
                         <div className="order-id">
                           {order?._id} <FiCopy className="copy-icon" />
                         </div>

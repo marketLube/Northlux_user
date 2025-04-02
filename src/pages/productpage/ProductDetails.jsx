@@ -41,6 +41,7 @@ function ProductDetailsContent() {
   // Local state to track which button is loading
   const [loadingAction, setLoadingAction] = useState(null); // "buy" or "cart"
 
+
   useEffect(() => {
     setSelectedVariant(null);
 
@@ -92,7 +93,7 @@ function ProductDetailsContent() {
   };
 
   const handleSubmitReview = async (reviewData) => {
-    console.log("Submitting review:", reviewData);
+
     const formData = new FormData();
     formData.append("rating", reviewData.rating);
     formData.append("review", reviewData.review);

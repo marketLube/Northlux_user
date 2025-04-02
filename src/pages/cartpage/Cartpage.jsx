@@ -48,8 +48,6 @@ function Cartpage() {
   });
   const navigate = useNavigate();
   const { data: cartData, isLoading, error } = useCart();
-  console.log(isLoading, "isLoading");
-  console.log(cartData, "cartData");
   const { mutate: updateQuantity, isPending: isUpdating } = useUpdateCartQuantity();
   const { mutate: removeFromCart, isPending: isRemoving } = useRemoveFromCart();
   const { mutate: applyCoupon, isPending: isApplyingCoupon } = useApplyCoupon();

@@ -11,7 +11,10 @@ import LoadingSpinner from "../../../components/LoadingSpinner";
 function Clearance() {
   const [products, setProducts] = useState([]);
   const scrollContainerRef = useRef(null);
-  const { data: response, isLoading, error } = useProducts();
+  const { data: response, isLoading, error } = useProducts({
+    labelId: "67e3bee5734dabfc5c7e4c59",
+  });
+
   const productslists = response?.data?.products
     ? response?.data?.products
     : [];

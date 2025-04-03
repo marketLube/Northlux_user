@@ -26,6 +26,7 @@ function ProductDetailsContent() {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const { id } = useParams();
   //api calls
@@ -106,6 +107,14 @@ function ProductDetailsContent() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleImageClick = (imageUrl) => {
+    setPreviewImage(imageUrl);
+  };
+
+  const handleClosePreview = () => {
+    setPreviewImage(null);
   };
 
   return (
@@ -427,7 +436,9 @@ function ProductDetailsContent() {
                             width: "20%",
                             height: "20%",
                             objectFit: "cover",
+                            cursor: "pointer"
                           }}
+                          onClick={() => handleImageClick(review.image)}
                         />
                       )}
                     </div>
@@ -495,6 +506,17 @@ function ProductDetailsContent() {
         onSubmit={handleSubmitReview}
         productId={product?._id}
       />
+
+      {previewImage && (
+        <div className="image-preview-overlay" onClick={handleClosePreview}>
+          <div className="image-preview-container">
+            <button className="close-preview" onClick={handleClosePreview}>
+              ×
+            </button>
+            <img src={previewImage} alt="Preview" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

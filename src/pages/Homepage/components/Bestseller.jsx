@@ -75,7 +75,7 @@ function Bestseller() {
           Our Best Sellers- <span>Loved By Thousands</span>
         </h3>
         <p onClick={handleViewAll} className="view-all desktop-view-all">
-          {/* View All <ViewAllIcon /> */}
+          View All <ViewAllIcon />
         </p>
       </div>
       <div className="bestseller-content">
@@ -86,6 +86,10 @@ function Bestseller() {
               src={currentProduct?.mainImage}
               alt={currentProduct?.name}
               className="fade-image"
+              onClick={() => {
+                console.log('Product ID:', currentProduct?._id);
+                navigate(`/products/${currentProduct?._id}`);
+              }}
             />
           </div>
         </div>
@@ -105,7 +109,7 @@ function Bestseller() {
             </button>
           </div>
           <h2 className="fade-text">{currentProduct?.name}</h2>
-          <p className="fade-text">{currentProduct?.description}</p>
+          <p className="fade-text">{currentProduct?.description.split("").length > 500 ? currentProduct?.description.split("").slice(0, 500).join("") + "..." : currentProduct?.description}</p>
           <div className="buttons">
             <button
               className="add-to-cart"

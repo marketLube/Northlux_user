@@ -15,6 +15,10 @@ console.log(filters);
 async function getProducts(filters) {
   const params = new URLSearchParams();
 
+  // Add pagination params
+  if (filters.page) params.append("page", filters.page);
+  if (filters.limit) params.append("limit", filters.limit);
+
 console.log(filters);
 
   if (filters.categoryId) params.append("categoryId", filters.categoryId);

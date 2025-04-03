@@ -5,12 +5,13 @@ import {
   FiArrowRight,
   FiArrowRight as ViewAllIcon,
 } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../../../hooks/queries/products";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 function Clearance() {
   const [products, setProducts] = useState([]);
   const scrollContainerRef = useRef(null);
+  const navigate = useNavigate();
   const { data: response, isLoading, error } = useProducts({
     labelId: "67e3bee5734dabfc5c7e4c59",
   });
@@ -52,6 +53,16 @@ function Clearance() {
     }
   };
 
+  const handleViewAll = () => {
+    navigate("/products", {
+      state: {
+        selectedLabel: { _id: "67e3bee5734dabfc5c7e4c59", name: "Clearance" },
+      },
+    });
+  };
+
+
+
   return (
     <div className="clearance-container" data-aos="fade-up">
       <div className="clearance-header">
@@ -63,9 +74,9 @@ function Clearance() {
             Get amazing deals on our top-rated products
           </p> */}
         </div>
-        <Link to="/products" className="view-all desktop-view-all">
+        <p onClick={handleViewAll} className="view-all desktop-view-all">
           View All <ViewAllIcon />
-        </Link>
+        </p>
       </div>
       <div className="clearance-products-wrapper">
         <button
@@ -86,9 +97,9 @@ function Clearance() {
           <FiArrowRight />
         </button>
       </div>
-      <Link to="/products" className="view-all mobile-view-all">
+      <p onClick={handleViewAll} className="view-all mobile-view-all">
         View All <ViewAllIcon />
-      </Link>
+      </p>
     </div>
   );
 }

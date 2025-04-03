@@ -60,15 +60,23 @@ function Bestseller() {
     });
   };
 
+  const handleViewAll = () => {
+    navigate("/products", {
+      state: {
+        selectedLabel: { _id: "67e10f6c5b3d36dda0b0c4cc", name: "Bestseller" },
+      },
+    });
+  };
+
   return (
     <div className="bestseller-container" data-aos="fade-up">
       <div className="bestseller-header">
         <h3>
           Our Best Sellers- <span>Loved By Thousands</span>
         </h3>
-        <Link to="/products" className="view-all desktop-view-all">
-          View All <ViewAllIcon />
-        </Link>
+        <p onClick={handleViewAll} className="view-all desktop-view-all">
+          {/* View All <ViewAllIcon /> */}
+        </p>
       </div>
       <div className="bestseller-content">
         <div className="bestseller-image-wrapper">
@@ -120,9 +128,9 @@ function Bestseller() {
           </div>
         </div>
       </div>
-      <Link to="/products" className="view-all mobile-view-all">
+      <p onClick={handleViewAll} className="view-all mobile-view-all">
         View All <ViewAllIcon />
-      </Link>
+      </p>
     </div>
   );
 }

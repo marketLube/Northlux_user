@@ -12,7 +12,6 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { useProducts } from "../../hooks/queries/products";
 import { useCategories } from "../../hooks/queries/categories";
 import debounce from "lodash/debounce";
-
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../../components/error/ErrorFallback";
 import { useLabels } from "../../hooks/queries/labels";
@@ -76,6 +75,10 @@ function AllProductsContent() {
 
   const MAX_PRICE_VALUE = 999999999;
 
+  // Add pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
+
   const {
     data: response,
     isLoading,
@@ -90,6 +93,8 @@ function AllProductsContent() {
         : selectedFilters.priceRange.max,
     labelId: selectedFilters.labelId,
     sort: selectedFilters.sort,
+    page: currentPage,
+    limit: ITEMS_PER_PAGE,
   });
 
   const {
@@ -131,6 +136,7 @@ function AllProductsContent() {
 
   useEffect(() => {
     const categoryFromHeader = location.state?.selectedCategory;
+    const labelFromHomePage = location.state?.selectedLabel;
     if (categoryFromHeader) {
       setSelectedFilters((prev) => ({
         ...prev,
@@ -140,7 +146,16 @@ function AllProductsContent() {
         ...prev,
         categoryName: categoryFromHeader.name,
       }));
-      window.history.replaceState({}, document.title);
+    }
+    if (labelFromHomePage) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        labelId: labelFromHomePage._id,
+      }));
+      setSelectedNames((prev) => ({
+        ...prev,
+        labelName: labelFromHomePage.name,
+      }));
     }
   }, [location.state]);
 
@@ -398,6 +413,15 @@ function AllProductsContent() {
     if (isFilterOpen) {
       toggleFilter();
     }
+  };
+
+  // Add pagination handler
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -703,15 +727,25 @@ function AllProductsContent() {
           ></div>
 
           {/* Product Grid */}
-          <div className="product-grid">
-            {products.map((product) => (
-              <Card key={product._id} product={product} />
-            ))}
+          <div className="products-container">
+            <div className="product-grid">
+              {products.map((product) => (
+                <Card key={product._id} product={product} />
+              ))}
+            </div>
+
+            {/* Add Pagination */}
+            {response?.data?.totalProducts > ITEMS_PER_PAGE && (
+              <div className="pagination-wrapper">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(response?.data?.totalProducts / ITEMS_PER_PAGE)}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            )}
           </div>
         </div>
-          {/* <div className="pagination">
-            <Pagination />
-          </div> */}
       </div>
     </div>
   );

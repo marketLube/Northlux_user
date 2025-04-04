@@ -27,6 +27,7 @@ function ProductDetailsContent() {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const { id } = useParams();
   //api calls
@@ -117,6 +118,10 @@ function ProductDetailsContent() {
     setPreviewImage(null);
   };
 
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
   return (
     <div className="product-details">
       <div className="breadcrumb">
@@ -188,10 +193,20 @@ function ProductDetailsContent() {
           <div className="section description">
             <h3>Description</h3>
             <p>
-              {selectedVariant
-                ? selectedVariant?.attributes?.description
-                : product?.description}
-              {/* <button className="read-more">Read more</button> */}
+              {showFullDescription
+                ? (selectedVariant
+                    ? selectedVariant?.attributes?.description
+                    : product?.description)
+                : (selectedVariant
+                    ? selectedVariant?.attributes?.description?.slice(0, 150)
+                    : product?.description?.slice(0, 150))}
+              {(selectedVariant
+                  ? selectedVariant?.attributes?.description?.length > 150
+                  : product?.description?.length > 150) && (
+                <button className="read-more" onClick={toggleDescription}>
+                  {showFullDescription ? "Show Less" : "Read More"}
+                </button>
+              )}
             </p>
           </div>
 

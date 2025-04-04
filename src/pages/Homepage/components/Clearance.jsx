@@ -16,18 +16,17 @@ function Clearance() {
     labelId: "67e3bee5734dabfc5c7e4c59",
   });
 
-  const productslists = response?.data?.products
-    ? response?.data?.products
-    : [];
-
-
+  const productslists = response?.data?.products || [];
 
   useEffect(() => {
-    setProducts(productslists);
-  }, [productslists]);
+    if (response?.data?.products) {
+      setProducts(response.data.products);
+    }
+  }, [response]);
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <div>Error: {error.message}</div>;
+  if (!products || products.length === 0) return <div>No products found</div>;
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -60,8 +59,6 @@ function Clearance() {
       },
     });
   };
-
-
 
   return (
     <div className="clearance-container" data-aos="fade-up">

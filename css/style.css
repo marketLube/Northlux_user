@@ -993,7 +993,8 @@ ul {
 
 .offer-container {
   margin: 2rem 0;
-  margin-bottom: 5rem;
+  height: 30rem;
+  opacity: 1;
 }
 .offer-container .offer-content {
   display: grid;
@@ -1001,6 +1002,18 @@ ul {
   gap: 2rem;
   background: linear-gradient(135deg, #2eb5af 0%, #2eb5af 100%);
   overflow: hidden;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  opacity: 1;
+  transform: translateX(0);
+  height: 30rem;
+}
+.offer-container .offer-content.slide-enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+.offer-container .offer-content.slide-exit {
+  opacity: 0.5;
+  transform: translateX(-50px);
 }
 .offer-container .offer-content .offer-text {
   padding: 4rem;
@@ -1015,9 +1028,8 @@ ul {
   margin-bottom: 0.5rem;
 }
 .offer-container .offer-content .offer-text h3 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  opacity: 0.8;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: white;
   margin-bottom: 1.5rem;
   position: relative;
@@ -1038,6 +1050,13 @@ ul {
   margin-bottom: 2rem;
   max-width: 90%;
 }
+.offer-container .offer-content .offer-text p .read-more {
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 4px;
+  text-decoration: underline;
+}
 .offer-container .offer-content .offer-text .offer-tags {
   display: flex;
   gap: 1rem;
@@ -1054,10 +1073,6 @@ ul {
 .offer-container .offer-content .offer-text .offer-tags span.limited {
   color: white;
 }
-.offer-container .offer-content .offer-text .offer-btn {
-  display: flex;
-  gap: 1rem;
-}
 .offer-container .offer-content .offer-text .explore-btn {
   align-self: flex-start;
   padding: 0.75rem 2rem;
@@ -1073,25 +1088,23 @@ ul {
   background-color: white;
   transform: translateY(-2px);
 }
-.offer-container .offer-content .offer-text .add-to-cart {
-  background: transparent;
-  color: white;
-  border: 1px solid white;
-  border-radius: 4px;
-  font-weight: 500;
-  padding: 0.75rem 2rem;
-}
 .offer-container .offer-content .offer-image {
   height: 100%;
+  overflow: hidden;
 }
 .offer-container .offer-content .offer-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
+  object-position: center;
 }
 @media screen and (max-width: 768px) {
+  .offer-container {
+    height: auto;
+  }
   .offer-container .offer-content {
     grid-template-columns: 1fr;
+    height: auto;
   }
   .offer-container .offer-content .offer-text {
     padding: 2rem;
@@ -1111,20 +1124,43 @@ ul {
   .offer-container .offer-content .offer-text .offer-tags span {
     text-align: lef;
   }
-  .offer-container .offer-content .offer-text .offer-btn {
-    flex-direction: column;
-  }
   .offer-container .offer-content .offer-text .explore-btn {
-    width: 100%;
-    text-align: center;
-  }
-  .offer-container .offer-content .offer-text .add-to-cart {
     width: 100%;
   }
   .offer-container .offer-content .offer-image {
     order: -1;
     height: 300px;
   }
+}
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0.5;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.slider-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(46, 181, 175, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.slider-dots .dot.active {
+  background-color: #2eb5af;
+  transform: scale(1.2);
 }
 
 .trending-container {
@@ -2958,8 +2994,12 @@ body.filter-open {
   border: none;
   background: none;
   padding: 0;
-  margin-left: 0.25rem;
+  margin-left: 0.5rem;
   cursor: pointer;
+  font-weight: 500;
+}
+.product-details .product-container .product-info .description p .read-more:hover {
+  text-decoration: underline;
 }
 .product-details .product-container .product-info .variants .type-buttons {
   display: flex;

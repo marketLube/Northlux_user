@@ -90,11 +90,27 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
 
-        .content-logo {
-          max-width: 60%;
-          max-height: 40%;
-          filter: brightness(0) invert(1);
+        .content-name-background {
+          position: absolute;
+          color: rgba(255, 255, 255, 0.2);
+          font-size: 72px;
+          font-weight: 800;
+          text-align: center;
+          white-space: nowrap;
+          text-transform: uppercase;
+          pointer-events: none;
+        }
+
+        .content-name {
+          position: relative;
+          color: white;
+          font-size: 24px;
+          font-weight: 600;
+          text-align: center;
+          padding: 0 10px;
+          z-index: 1;
         }
       }
 

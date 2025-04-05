@@ -70,8 +70,7 @@ function ProductDetailsContent() {
   };
 
   const reviews = product.ratings;
-
-  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 2);
+  const visibleReviews = showAllReviews ? reviews : reviews?.slice(0, 2);
 
   const handleAddToCart = (type) => {
     const productToAdd = {
@@ -429,56 +428,56 @@ function ProductDetailsContent() {
             {product?.totalRatings > 0 && (
               <div className="reviews-list">
                 {visibleReviews.map((review) => (
-                  <div key={review._id} className="review-item">
+                  <div key={review?._id} className="review-item">
                     <div className="review-header">
                       <div className="user-info">
                         <img
                           src={
-                            review.userId.image
-                              ? review.userId.image
+                            review?.userId?.image
+                              ? review?.userId?.image
                               : "/images/user/profilepicture.jpg"
                           }
-                          alt={review.userId?.username}
+                          alt={review?.userId?.username}
                           className="user-avatar"
                         />
                         <div className="user-details">
                           <span className="username">
-                            {review.userId?.username}
+                            {review?.userId?.username}
                           </span>
                           <span className="date">
-                            {new Date(review.createdAt).toLocaleDateString()}
+                            {new Date(review?.createdAt).toLocaleDateString()}
                           </span>
                         </div>
                       </div>
                       <div className="review-rating">
-                        {"★".repeat(review.rating)}
-                        {"☆".repeat(5 - review.rating)}
+                        {"★".repeat(review?.rating)}
+                        {"☆".repeat(5 - review?.rating)}
                       </div>
                     </div>
                     <div className="review-image">
                       {review.image && (
                         <img
-                          src={review.image}
-                          alt={review.review}
+                          src={review?.image}
+                          alt={review?.review}
                           style={{
                             width: "20%",
                             height: "20%",
                             objectFit: "cover",
                             cursor: "pointer",
                           }}
-                          onClick={() => handleImageClick(review.image)}
+                          onClick={() => handleImageClick(review?.image)}
                         />
                       )}
                     </div>
-                    <p className="review-comment">{review.review}</p>
+                    <p className="review-comment">{review?.review}</p>
                   </div>
                 ))}
-                {reviews.length > 2 && (
+                {reviews?.length > 2 && (
                   <button
                     className="show-more"
                     onClick={() => setShowAllReviews(!showAllReviews)}
                   >
-                    {showAllReviews ? "Show Less" : "Show More"}
+                    {showAllReviews ? `Show Less` : `Show All (${reviews.length - 2} more)`}
                   </button>
                 )}
               </div>

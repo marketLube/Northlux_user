@@ -10,6 +10,11 @@
     align-items: center;
     margin-bottom: 2rem;
 
+@media screen and (max-width: 768px) {
+  margin-bottom: 0;
+}
+
+
     .clearance-content {
       &_h2 {
         font-size: 2rem;
@@ -122,6 +127,7 @@
 
     .mobile-view-all {
       display: flex;
+      color: var.$color-primary;
     }
 
     .clearance-products {

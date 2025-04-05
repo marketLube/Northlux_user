@@ -167,8 +167,8 @@ margin-bottom: 10px;
         width: 100%;
         padding: 12px;
         background-color: white;
-        color: #ffa500;
-        border: 1px solid #ffa500;
+        color: var.$color-primary;
+        border: 1px solid var.$color-primary;
         border-radius: 4px;
         font-size: 16px;
         font-weight: 500;
@@ -187,7 +187,7 @@ margin-bottom: 10px;
 input[required]::placeholder {
   &::after {
     content: " *";
-    color: #ffa500;
+    color: var.$color-primary;
   }
 }
 

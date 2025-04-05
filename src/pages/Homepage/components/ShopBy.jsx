@@ -80,8 +80,10 @@ const ShopBy = () => {
                 alt={category.name}
                 className="content-image"
               />
-              <div className="content-overlay"></div>
-              <h3 className="content-name">{category.name}</h3>
+              <div className="content-overlay">
+                <span className="content-name-background">{category.name}</span>
+                <h3 className="content-name">{category.name}</h3>
+              </div>
             </div>
           ))}
         </div>

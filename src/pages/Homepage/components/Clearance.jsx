@@ -18,6 +18,8 @@ function Clearance() {
 
   const productslists = response?.data?.products || [];
 
+  console.log(response , "clearence");
+
   useEffect(() => {
     if (response?.data?.products) {
       setProducts(response.data.products);
@@ -33,17 +35,22 @@ function Clearance() {
       const container = scrollContainerRef.current;
       const isMobile = window.innerWidth <= 768;
 
-      // Calculate card width including gap
-      const cardWidth = isMobile
-        ? container.offsetWidth
-        : (container.offsetWidth - 2 * 24) / 3; // 3 cards with 1.5rem (24px) gap
+      // Get the actual card width from the first product card
+      const cardElement = container.querySelector('.product-card');
+      const cardWidth = cardElement ? cardElement.offsetWidth : 0;
+      const gap = 24; // 1.5rem gap
+
+      // Calculate scroll amount based on actual card width
+      const scrollAmount = cardWidth + gap;
 
       // Calculate scroll position
       const currentScroll = container.scrollLeft;
-      const targetScroll =
-        direction === "left"
-          ? currentScroll - cardWidth - 24 // subtract gap
-          : currentScroll + cardWidth + 24; // add gap
+      const targetScroll = direction === "left"
+        ? Math.max(0, currentScroll - scrollAmount)
+        : Math.min(
+            container.scrollWidth - container.clientWidth,
+            currentScroll + scrollAmount
+          );
 
       container.scrollTo({
         left: targetScroll,
@@ -61,7 +68,7 @@ function Clearance() {
   };
 
   return (
-    <div className="clearance-container" data-aos="fade-up">
+    <div className="clearance-container" >
       <div className="clearance-header">
         <div className="clearance-content">
           <h2 className="clearance-content_h2">

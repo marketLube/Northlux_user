@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Card from "../../components/Card";
-import {
-  FiChevronLeft,
-  FiChevronRight,
-  FiShare2,
-  FiHeart,
-} from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiShare2 } from "react-icons/fi";
 import { useProductById, useProducts } from "../../hooks/queries/products";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -194,15 +189,15 @@ function ProductDetailsContent() {
             <h3>Description</h3>
             <p>
               {showFullDescription
-                ? (selectedVariant
-                    ? selectedVariant?.attributes?.description
-                    : product?.description)
-                : (selectedVariant
-                    ? selectedVariant?.attributes?.description?.slice(0, 150)
-                    : product?.description?.slice(0, 150))}
+                ? selectedVariant
+                  ? selectedVariant?.attributes?.description
+                  : product?.description
+                : selectedVariant
+                ? selectedVariant?.attributes?.description?.slice(0, 150)
+                : product?.description?.slice(0, 150)}
               {(selectedVariant
-                  ? selectedVariant?.attributes?.description?.length > 150
-                  : product?.description?.length > 150) && (
+                ? selectedVariant?.attributes?.description?.length > 150
+                : product?.description?.length > 150) && (
                 <button className="read-more" onClick={toggleDescription}>
                   {showFullDescription ? "Show Less" : "Read More"}
                 </button>
@@ -451,7 +446,7 @@ function ProductDetailsContent() {
                             width: "20%",
                             height: "20%",
                             objectFit: "cover",
-                            cursor: "pointer"
+                            cursor: "pointer",
                           }}
                           onClick={() => handleImageClick(review.image)}
                         />

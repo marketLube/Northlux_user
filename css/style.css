@@ -2847,14 +2847,18 @@ body.filter-open {
   overflow: hidden;
   aspect-ratio: 1/1;
   width: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .product-details .product-container .product-images .main-image img {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 @media (max-width: 768px) {
   .product-details .product-container .product-images .main-image {
@@ -2900,6 +2904,11 @@ body.filter-open {
   border-radius: 4px;
   cursor: pointer;
   object-fit: cover;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.product-details .product-container .product-images .thumbnail-images img.selected {
+  border-color: #2eb5af;
 }
 @media (max-width: 768px) {
   .product-details .product-container .product-images .thumbnail-images {
@@ -3050,14 +3059,35 @@ body.filter-open {
   color: #2eb5af;
 }
 @media (max-width: 768px) {
-  .product-details .product-container .product-info .variants {
+  .product-details .product-container .product-info .variants .type-buttons {
     width: 100%;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
-  .product-details .product-container .product-info .variants .type-btn {
+  .product-details .product-container .product-info .variants .type-buttons .type-btn {
     width: 100%;
     justify-content: flex-start;
+  }
+}
+@media (max-width: 400px) {
+  .product-details .product-container .product-info .variants .type-buttons {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .product-details .product-container .product-info .variants .type-buttons .type-btn {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+  .product-details .product-container .product-info .variants .type-buttons .type-btn .variant-image {
+    width: 4rem;
+    height: 4rem;
+  }
+  .product-details .product-container .product-info .variants .type-buttons .type-btn .light-info span {
+    font-size: 0.938rem;
+  }
+  .product-details .product-container .product-info .variants .type-buttons .type-btn .light-info span.temp {
+    font-size: 0.813rem;
   }
 }
 .product-details .product-container .price .price-info {
